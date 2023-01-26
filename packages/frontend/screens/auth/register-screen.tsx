@@ -6,12 +6,11 @@ import { useRouter } from "next/router";
 export const RegisterScreen: React.FC = () => {
   const router = useRouter();
   const onBackToLogin = React.useCallback(() => {
-    const id = crypto.randomUUID();
-    router.push(`/dashboard?room=${id}`);
+    router.push("/login");
   }, [router]);
 
   const onTakeMeIn = React.useCallback(() => {
-    router.push("/dashboard");
+    router.push("/rooms");
   }, [router]);
 
   return (
@@ -21,21 +20,21 @@ export const RegisterScreen: React.FC = () => {
         <h2 className={styles.loginHeading}>Register</h2>
         <div className={styles.loginBody}>
           <input
-            placeholder="Username"
+            placeholder='Username'
             className={styles.loginInput}
-            autoComplete="off"
+            autoComplete='off'
           />
           <input
-            placeholder="Password"
+            placeholder='Password'
             className={styles.loginInput}
-            autoComplete="off"
-            type="password"
+            autoComplete='off'
+            type='password'
           />
           <input
-            placeholder="Confirm Password"
+            placeholder='Confirm Password'
             className={styles.loginInput}
-            autoComplete="off"
-            type="password"
+            autoComplete='off'
+            type='password'
           />
         </div>
         <div className={styles.loginActions}>

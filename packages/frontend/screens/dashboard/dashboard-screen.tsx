@@ -115,6 +115,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ roomId }) => {
 
   React.useEffect(() => {
     updateColour();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (roomId === "") return <></>;

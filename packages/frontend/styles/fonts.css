@@ -17,7 +17,8 @@ h1 {
 h1,
 h2,
 h3,
-h4 {
+h4,
+span {
   font-family: Barlow !important;
 }
 
@@ -36,6 +37,7 @@ button {
   --violet-300: #3e005b;
   --violet-400: #1e062e;
   --violet-500: #06000d;
+  --violet-600: #040008;
 
   --blue-100: #cccbff;
   --blue-200: #847afa;
@@ -60,4 +62,12 @@ button {
   --orange-300: #a86604;
   --orange-400: #5b3700;
   --orange-500: #201602;
+
+  --neutral-50: #eeeeee;
+  --neutral-100: #aaaaaa;
+  --neutral-200: #666666;
+  --neutral-300: #333333;
+  --neutral-400: #222222;
+  --neutral-500: #111111;
+  --neutral-600: #000000;
 }

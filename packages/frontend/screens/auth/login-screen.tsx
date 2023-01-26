@@ -15,10 +15,11 @@ export const LoginScreen: React.FC = () => {
   }, [router]);
 
   const onLogin = React.useCallback(() => {
-    const id = crypto.randomUUID();
-    router.push(`/dashboard?room=${id}`);
-    localStorage.setItem(`room-username`, loginForm.username);
-  }, [router, loginForm]);
+    // const id = crypto.randomUUID();
+    // router.push(`/dashboard?room=${id}`);
+    // localStorage.setItem(`room-username`, loginForm.username);
+    router.push("/rooms");
+  }, [router]);
 
   return (
     <main className={styles.main}>
@@ -27,19 +28,19 @@ export const LoginScreen: React.FC = () => {
         <h2 className={styles.loginHeading}>Login</h2>
         <div className={styles.loginBody}>
           <input
-            placeholder="Username"
+            placeholder='Username'
             className={styles.loginInput}
-            autoComplete="off"
+            autoComplete='off'
             value={loginForm.username}
             onChange={(e) =>
               setLoginForm((prev) => ({ ...prev, username: e.target.value }))
             }
           />
           <input
-            placeholder="Password"
+            placeholder='Password'
             className={styles.loginInput}
-            autoComplete="off"
-            type="password"
+            autoComplete='off'
+            type='password'
           />
         </div>
         <div className={styles.loginActions}>
