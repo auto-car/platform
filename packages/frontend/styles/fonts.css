@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;700;800;900&family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0px;
+}
+
+h1 {
+  margin: 0px !important;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: Barlow !important;
+}
+
+h5,
+h6,
+p,
+input,
+button {
+  font-family: Rubik !important;
+}
+
+:root {
+  --violet-100: #f1cbff;
+  --violet-100-placeholder: #f1cbff65;
+  --violet-200: #c97afa;
+  --violet-300: #3e005b;
+  --violet-400: #1e062e;
+  --violet-500: #06000d;
+
+  --blue-100: #cccbff;
+  --blue-200: #847afa;
+  --blue-300: #151365;
+  --blue-400: #08073a;
+  --blue-500: #020220;
+
+  --green-100: #c0ffce;
+  --green-200: #6ddb7e;
+  --green-300: #188931;
+  --green-400: #01420b;
+  --green-500: #02200a;
+
+  --pink-100: #ffcbfa;
+  --pink-200: #fa7ade;
+  --pink-300: #a80498;
+  --pink-400: #5b004d;
+  --pink-500: #200219;
+
+  --orange-100: #fff0cb;
+  --orange-200: #fad67a;
+  --orange-300: #a86604;
+  --orange-400: #5b3700;
+  --orange-500: #201602;
+}

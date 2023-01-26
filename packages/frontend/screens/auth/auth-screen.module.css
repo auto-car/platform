@@ -1,0 +1,90 @@
+.main {
+  background: radial-gradient(
+    32.19% 43.21% at 50% 50%,
+    #1a0332 0%,
+    var(--violet-500) 58.33%
+  );
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginHeading {
+  color: var(--violet-100);
+  font-size: 36px;
+}
+
+.loginSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  width: 600px;
+}
+
+.loginInput {
+  padding: 24px;
+  border-radius: 4px;
+  border: 3px solid var(--violet-300);
+  background: none;
+  width: calc(100% - 54px);
+  outline: none;
+  color: var(--violet-100);
+  font-family: Rubik;
+}
+
+.loginInput::placeholder {
+  color: var(--violet-100-placeholder);
+  font-family: Rubik;
+}
+
+.loginBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 32px;
+}
+
+.loginActions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.loginActionButtonSignUp,
+.loginActionButtonLogin {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  margin: 0;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: Rubik;
+}
+
+.loginActionButtonSignUp {
+  background: var(--blue-200);
+  color: var(--blue-500);
+}
+
+.loginActionButtonLogin {
+  background: var(--blue-300);
+  color: var(--blue-100);
+}
+
+.loginActionButtonSignUp:hover,
+.loginActionButtonLogin:hover {
+  scale: 1.05;
+}
+
+.loginActionButtonSignUp:active,
+.loginActionButtonLogin:active {
+  scale: 0.95;
+}
