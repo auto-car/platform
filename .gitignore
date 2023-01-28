@@ -34,5 +34,8 @@ coverage
 !.yarn/sdks
 !.yarn/versions
 
-dist/
+# rollup
+.rollup.cache
+
+dist
 .vscode

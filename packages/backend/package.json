@@ -1,0 +1,9 @@
+{
+  "name": "@platform/backend",
+  "description": "The R Analytics backend for the autoCAR platform 👨‍👩‍👧‍👦",
+  "version": "0.0.0",
+  "scripts": {
+    "run": "./run-backend.sh"
+  },
+  "license": "MIT"
+}
