@@ -37,7 +37,10 @@ button {
   --violet-300: #3e005b;
   --violet-400: #1e062e;
   --violet-500: #06000d;
+  --violet-500-light: #06000d20;
   --violet-600: #040008;
+
+  background: var(--violet-500);
 
   --blue-100: #cccbff;
   --blue-200: #847afa;

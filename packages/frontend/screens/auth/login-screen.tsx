@@ -2,55 +2,30 @@ import React from "react";
 import { useRouter } from "next/router";
 import { LogoHeader } from "../../components/logo-header/logo-header";
 import styles from "./auth-screen.module.css";
+import { Auth0Icon } from "icons/auth0-icon";
 
 export const LoginScreen: React.FC = () => {
   const router = useRouter();
-  const [loginForm, setLoginForm] = React.useState({
-    username: "",
-    password: "",
-  });
-
-  const onSignUp = React.useCallback(() => {
-    router.push("/register");
-  }, [router]);
 
   const onLogin = React.useCallback(() => {
-    // const id = crypto.randomUUID();
-    // router.push(`/dashboard?room=${id}`);
-    // localStorage.setItem(`room-username`, loginForm.username);
-    router.push("/rooms");
+    router.replace("/api/auth/login");
   }, [router]);
 
   return (
     <main className={styles.main}>
       <LogoHeader />
       <div className={styles.loginSection}>
-        <h2 className={styles.loginHeading}>Login</h2>
-        <div className={styles.loginBody}>
-          <input
-            placeholder='Username'
-            className={styles.loginInput}
-            autoComplete='off'
-            value={loginForm.username}
-            onChange={(e) =>
-              setLoginForm((prev) => ({ ...prev, username: e.target.value }))
-            }
-          />
-          <input
-            placeholder='Password'
-            className={styles.loginInput}
-            autoComplete='off'
-            type='password'
-          />
-        </div>
-        <div className={styles.loginActions}>
-          <button className={styles.loginActionButtonSignUp} onClick={onSignUp}>
-            Sign Up
-          </button>
-          <button className={styles.loginActionButtonLogin} onClick={onLogin}>
-            Login
-          </button>
-        </div>
+        <hgroup className={styles.loginHGroup}>
+          <h2 className={styles.loginHeading}>Login to AutoCAR</h2>
+          <p className={styles.loginInfo}>
+            Auth0 is a secure third party authentication provider. <br />
+            Login to AutoCAR using your Google or Microsoft account!
+          </p>
+        </hgroup>
+        <button className={styles.loginActionButtonLogin} onClick={onLogin}>
+          <Auth0Icon width={24} className={styles.auth0Icon} />
+          Login with Auth0
+        </button>
       </div>
     </main>
   );

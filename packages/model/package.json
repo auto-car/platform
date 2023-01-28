@@ -1,0 +1,20 @@
+{
+  "name": "@platform/model",
+  "description": "The TypeScript types for the autoCAR platform data model 👌",
+  "version": "0.1.0",
+  "main": "./model.ts",
+  "types": "./model.ts",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "8.30.0",
+    "typescript": "4.9.4"
+  }
+}

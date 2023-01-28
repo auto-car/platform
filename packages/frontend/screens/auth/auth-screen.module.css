@@ -12,9 +12,25 @@
   justify-content: center;
 }
 
+.loginHGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .loginHeading {
   color: var(--violet-100);
-  font-size: 36px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.loginInfo {
+  color: var(--violet-100);
+  opacity: 0.6;
+  font-size: 12px;
+  text-align: center;
+  font-weight: 400;
+  line-height: 150%;
 }
 
 .loginSection {
@@ -22,18 +38,18 @@
   flex-direction: column;
   align-items: center;
   gap: 36px;
-  width: 600px;
 }
 
 .loginInput {
-  padding: 24px;
+  padding: 20px;
   border-radius: 4px;
   border: 3px solid var(--violet-300);
   background: none;
-  width: calc(100% - 54px);
+  width: calc(100% - 46px);
   outline: none;
   color: var(--violet-100);
   font-family: Rubik;
+  font-size: 14px;
 }
 
 .loginInput::placeholder {
@@ -46,7 +62,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 32px;
+  gap: 24px;
 }
 
 .loginActions {
@@ -59,7 +75,7 @@
 
 .loginActionButtonSignUp,
 .loginActionButtonLogin {
-  padding: 12px 24px;
+  padding: 12px 20px;
   border: none;
   border-radius: 4px;
   outline: none;
@@ -67,6 +83,11 @@
   font-weight: 500;
   cursor: pointer;
   font-family: Rubik;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
 }
 
 .loginActionButtonSignUp {
@@ -87,4 +108,8 @@
 .loginActionButtonSignUp:active,
 .loginActionButtonLogin:active {
   scale: 0.95;
+}
+
+.auth0Icon {
+  fill: var(--violet-100);
 }

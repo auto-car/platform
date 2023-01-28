@@ -7,19 +7,27 @@ interface LogoHeaderProps {
 
 export const LogoHeader: React.FC<LogoHeaderProps> = ({ size = "normal" }) => {
   return (
-    <div className={styles.logoHeader}>
+    <div
+      className={size === "normal" ? styles.logoHeader : styles.logoHeaderSmall}
+    >
       <Image
         alt='logo'
         src={"/logo.svg"}
-        width={size === "normal" ? 64 : 32}
-        height={size === "normal" ? 64 : 32}
+        width={size === "normal" ? 48 : 24}
+        height={size === "normal" ? 48 : 24}
       />
-      {size === "normal" ? (
-        <hgroup className={styles.logoHeaderHeadings}>
-          <h1 className={styles.logoHeading}>AutoCAR</h1>
+      <hgroup className={styles.logoHeaderHeadings}>
+        <h1
+          className={
+            size === "normal" ? styles.logoHeading : styles.logoHeadingSmall
+          }
+        >
+          AutoCAR
+        </h1>
+        {size === "normal" ? (
           <p>CAR T-Cell Research with Collaboration</p>
-        </hgroup>
-      ) : null}
+        ) : null}
+      </hgroup>
     </div>
   );
 };

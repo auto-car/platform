@@ -1,15 +1,24 @@
-.logoHeader {
+.logoHeader,
+.logoHeaderSmall {
   position: fixed;
   left: 48px;
   top: 48px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
+}
+
+.logoHeaderSmall {
+  gap: 8px;
 }
 
 .logoHeading {
-  font-size: 40px;
+  font-size: 28px;
+}
+
+.logoHeadingSmall {
+  font-size: 12px;
 }
 
 .logoHeaderHeadings {

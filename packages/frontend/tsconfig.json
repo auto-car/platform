@@ -5,28 +5,17 @@
     "rootDir": "./",
     "baseUrl": "./",
     "target": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "types": [
-      "@cloudflare/workers-types",
-      "jest"
-    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": ["@cloudflare/workers-types", "jest"],
     "paths": {},
     "allowJs": true,
     "jsx": "preserve"
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "./dist",
-    "**/__tests__/**"
-  ],
-  "references": []
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "./dist", "**/__tests__/**"],
+  "references": [
+    {
+      "path": "../model"
+    }
+  ]
 }

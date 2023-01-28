@@ -7,10 +7,11 @@ export const RoomCard = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "320px",
-        width: "360px",
+        height: "260px",
+        width: "320px",
         borderRadius: "8px",
         background: "var(--violet-400)",
+        cursor: "pointer",
       }}
     >
       <div
@@ -24,7 +25,7 @@ export const RoomCard = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "24px",
+          padding: "20px",
           alignItems: "center",
           justifyContent: "space-between",
           width: "calc(100% - 48px)",
@@ -36,12 +37,12 @@ export const RoomCard = () => {
             flexDirection: "column",
           }}
         >
-          <h3 style={{ fontWeight: 500 }}>My Room</h3>
+          <h4 style={{ fontWeight: 500, fontSize: "16px" }}>My Room</h4>
           <span
             style={{
               color: "var(--violet-100)",
               opacity: 0.75,
-              fontSize: "14px",
+              fontSize: "12px",
             }}
           >
             Updated 3 days ago

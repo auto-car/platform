@@ -26,7 +26,7 @@ export const RoomsFilterableSection: React.FC<RoomsFilterableSectionProps> = ({
         display: "flex",
         flexDirection: "column",
         width: "100%",
-        gap: "12px",
+        gap: "8px",
       }}
     >
       <hgroup
@@ -38,7 +38,9 @@ export const RoomsFilterableSection: React.FC<RoomsFilterableSectionProps> = ({
           width: "100%",
         }}
       >
-        <h2>{title}</h2>
+        <h2 style={{ fontSize: "20px", color: "var(--violet-200)" }}>
+          {title}
+        </h2>
         <RoomsFilterSelector />
       </hgroup>
       <div

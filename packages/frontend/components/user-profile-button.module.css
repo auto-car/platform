@@ -1,0 +1,23 @@
+.logoutIcon {
+  fill: var(--violet-100);
+}
+
+.userProfileButtonMenuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  gap: 12px;
+  padding: 12px 24px;
+  border-radius: 4px;
+}
+
+.userProfileButtonMenuItem:hover {
+  scale: 1.01;
+  background: var(--violet-500-light);
+}
+
+.userProfileButtonMenuItem:active {
+  scale: 0.99;
+  background: var(--violet-500-light);
+}

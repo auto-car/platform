@@ -10,7 +10,7 @@ export const RoomsFilterSelector = () => {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        padding: "20px",
+        padding: "16px",
       }}
     >
       <select
@@ -23,6 +23,8 @@ export const RoomsFilterSelector = () => {
           cursor: "pointer",
           margin: 0,
           width: "100%",
+          fontSize: "12px",
+          fontWeight: 400,
         }}
       >
         <option>All Rooms</option>
