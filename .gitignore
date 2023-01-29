@@ -40,4 +40,4 @@ coverage
 dist
 .vscode
 
-*dataset*
+packages/backend/data
