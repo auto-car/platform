@@ -12,7 +12,7 @@
     "build:force": "tsc --build --force",
     "build:clean": "rm -rf packages/**/dist/**",
     "frontend:dev": "yarn workspace @platform/frontend dev",
-    "backend:dev": "yarn workspace @platform/backend run",
+    "backend:dev": "cd packages/backend && ./run-backend.sh",
     "user-worker:dev": "yarn workspace @platform/user-worker dev",
     "user-worker:publish": "yarn workspace @platform/user-worker publish"
   },
