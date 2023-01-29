@@ -1,2 +1,2 @@
 # platform
-Central monorepo for the auto-car platform.
+Central monorepo for the AutoCAR platform.
