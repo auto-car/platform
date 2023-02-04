@@ -43,9 +43,33 @@ export const RoomsFilterableSection: React.FC<RoomsFilterableSectionProps> = ({
     [selectedFilter]
   );
 
+  const applyFilterToRooms = React.useCallback(
+    (selectedFilter: FilterType, user: User) => {
+      let filtered = rooms;
+      switch (selectedFilter) {
+        case FilterType.All:
+          filtered = rooms;
+          break;
+        case FilterType.CreatedByMe:
+          filtered = rooms.filter((room) => room.owner.id === user.id);
+          break;
+        case FilterType.SharedWithMe:
+          filtered = rooms.filter(
+            (room) =>
+              room.members.filter((member) => member.id === user.id).length >
+                0 && room.owner.id !== user.id
+          );
+          break;
+      }
+
+      setFilteredRooms(filtered);
+    },
+    [rooms]
+  );
+
   React.useEffect(() => {
-    applyFilterToRooms(selectedFilter, rooms, user);
-  }, [selectedFilter, rooms, user]);
+    applyFilterToRooms(selectedFilter, user);
+  }, [selectedFilter, user, rooms, applyFilterToRooms]);
 
   return (
     <section
@@ -82,8 +106,8 @@ export const RoomsFilterableSection: React.FC<RoomsFilterableSectionProps> = ({
           flexWrap: "wrap",
         }}
       >
-        {rooms.length > 0 ? (
-          rooms.map((_, index) => <RoomCard key={index} />)
+        {filteredRooms.length > 0 ? (
+          filteredRooms.map((room, index) => <RoomCard key={index} {...room} />)
         ) : (
           <p style={{ color: "var(--violet-100)", opacity: 0.5 }}>
             {emptyStateText}
@@ -102,23 +126,5 @@ const getEmptyStateText = (selectedFilter: FilterType) => {
       return "You have not created any rooms.";
     case FilterType.SharedWithMe:
       return "You have not been invited to any rooms.";
-  }
-};
-
-const applyFilterToRooms = (
-  selectedFilter: FilterType,
-  rooms: Room[],
-  user: User
-) => {
-  switch (selectedFilter) {
-    case FilterType.All:
-      return rooms;
-    case FilterType.CreatedByMe:
-      return rooms.filter((room) => room.owner.id === user.id);
-    case FilterType.SharedWithMe:
-      return rooms.filter(
-        (room) =>
-          room.members.filter((member) => member.id === user.id).length > 0
-      );
   }
 };

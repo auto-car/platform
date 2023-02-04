@@ -12,6 +12,9 @@ export class StorageDO {
 
   async fetch(request: Request) {
     const url = new URL(request.url);
+    const records = Array.from(
+      (await this.state.storage.list<User>()).entries()
+    );
 
     switch (url.pathname) {
       case "/":
@@ -19,6 +22,9 @@ export class StorageDO {
           "🚀🚀 AutoCAR User Worker: Alive and well!!",
           200
         );
+      case "/admin":
+        this.state.storage.deleteAll();
+        return decorateResponse("The deed is done.", 200);
       case "/user":
         switch (request.method) {
           case "POST":
@@ -40,7 +46,9 @@ export class StorageDO {
       case "/users":
         return decorateResponse(
           JSON.stringify(
-            Array.from((await this.state.storage.list()).entries())
+            records
+              .filter((record) => !record[0].includes("@"))
+              .map((record) => record[1])
           ),
           200
         );
@@ -90,7 +98,7 @@ class UserService {
         `user:${createdUserObj.email}`
       );
       if (existingObj) {
-        return decorateResponse("User already exists, completing login!", 200);
+        return decorateResponse(JSON.stringify(existingObj), 200);
       }
       // Add user to storage, indexes of id and email
       await state.storage.put(`user:${createdUserObj.id}`, createdUserObj);
@@ -111,7 +119,10 @@ class UserService {
       // Check user exists
       const user = await state.storage.get<User>(`user:${addRoomObj.id}`);
       if (!user) {
-        return decorateResponse("Error: user does not exist", 400);
+        return decorateResponse(
+          `Error: user with id ${addRoomObj.id} does not exist`,
+          400
+        );
       }
 
       // Add room
@@ -128,9 +139,14 @@ class UserService {
 
   async getUserRooms(request: Request, state: DurableObjectState) {
     try {
-      const userRoomsObj = await request.json<{ id: string }>();
+      const url = new URL(request.url);
+      const userId = url.searchParams.get("id");
+      if (!userId) {
+        return decorateResponse("Error: id not provided", 400);
+      }
+
       // Check user exists
-      const user = await state.storage.get<User>(`user:${userRoomsObj.id}`);
+      const user = await state.storage.get<User>(`user:${userId}`);
       if (!user) {
         return decorateResponse("Error: user does not exist", 400);
       }

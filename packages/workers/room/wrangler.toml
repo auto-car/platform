@@ -5,9 +5,13 @@ compatibility_date = "2022-09-08"
 [build]
 command = "yarn build"
 
+[[services]]
+binding = "USER"
+service = "autocar-user-worker"
+environment = "production"
+
 [durable_objects]
 bindings = [{name = "STORAGE", class_name = "StorageDO"}]
-services = [{binding = "USER", service="autocar-user-worker"}]
 
 [[migrations]]
 tag = "v1" # Should be unique for each entry

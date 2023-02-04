@@ -1,4 +1,4 @@
-import { Room } from "@platform/model";
+import { Room, RoomMember } from "@platform/model";
 import { LogoHeader } from "../../components/logo-header/logo-header";
 import { PageHeader } from "../../components/page-header";
 import { UserContext } from "../../context/user-context";
@@ -20,19 +20,32 @@ import styles from "../../components/rooms/create-room-dialog.module.css";
 
 export default function Rooms() {
   const [rooms, setRooms] = React.useState<Room[]>([]);
-  const { user } = React.useContext(UserContext);
-  // const getRooms = React.useCallback(async () => {
-  //   try {
-  //     const response = await fetch('http://127.0.0.1/8787/user/rooms', {method: "GET", body: JSON.stringify({id: })})
-  //   } catch (e) {
-  //     console.error(e as Error);
-  //   }
-  // }, [])
+  const [triggerReload, setTriggerReload] = React.useState(true);
+  const { user, userDispatch } = React.useContext(UserContext);
+
+  const getRooms = React.useCallback(async () => {
+    try {
+      const response = await fetch(
+        `https://autocar-user-worker.kishek12.workers.dev/user/rooms?id=${user.id}`
+      );
+      const rooms = await response.json<Room[]>();
+      setRooms(rooms);
+      setTriggerReload(false);
+      userDispatch({ type: "rooms", payload: rooms });
+    } catch (e) {
+      console.error(e as Error);
+    }
+  }, [user, userDispatch]);
 
   React.useEffect(() => {
-    console.log("User from context:", user);
-    setRooms(user.rooms);
-  }, [user]);
+    if (triggerReload && user.id !== "") {
+      getRooms();
+    }
+  }, [triggerReload, getRooms, user]);
+
+  const doReload = React.useCallback(() => {
+    setTriggerReload(true);
+  }, []);
 
   return (
     <>
@@ -63,7 +76,7 @@ export default function Rooms() {
               View all your rooms in one place.
             </span>
           </hgroup>
-          <CreateRoomButtonWithDialog />
+          <CreateRoomButtonWithDialog doReload={doReload} />
           <RoomsFilterableSection filterOn='recentlyCreated' rooms={rooms} />
           <RoomsFilterableSection filterOn='roomsWithUser' rooms={rooms} />
         </div>
@@ -73,12 +86,18 @@ export default function Rooms() {
   );
 }
 
-export const CreateRoomButtonWithDialog = () => {
+interface CreateRoomButtonWithDialogProps {
+  doReload: VoidFunction;
+}
+
+export const CreateRoomButtonWithDialog: React.FC<
+  CreateRoomButtonWithDialogProps
+> = ({ doReload }) => {
   const dialogDisclosureProps = useDisclosure();
 
   return (
     <>
-      <CreateRoomDialog {...dialogDisclosureProps} />
+      <CreateRoomDialog {...dialogDisclosureProps} doReload={doReload} />
       <button
         style={{
           border: "1px solid var(--violet-300)",
@@ -117,31 +136,57 @@ export const CreateRoomButtonWithDialog = () => {
 interface CreateRoomDialogProps {
   isOpen: boolean;
   onClose: VoidFunction;
-  onOpen: VoidFunction;
+  doReload: VoidFunction;
 }
 
 interface CreateRoomFormProps {
   name: string;
-  members: string[];
+  members: RoomMember[];
 }
 
 export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
   isOpen,
   onClose,
-  onOpen,
+  doReload,
 }) => {
+  const { user } = React.useContext(UserContext);
   const [createRoomForm, setCreateRoomForm] =
     React.useState<CreateRoomFormProps>({
       name: "",
       members: [],
     });
+  const [memberOptions, setMemberOptions] = React.useState<RoomMember[]>([]);
 
-  const handleSubmit = React.useCallback(() => {}, []);
+  const handleSubmit = React.useCallback(async () => {
+    try {
+      await fetch("https://autocar-room-worker.kishek12.workers.dev/room", {
+        method: "POST",
+        body: JSON.stringify({
+          ...createRoomForm,
+          owner: { id: user.id, name: user.name, picture: user.picture },
+        }),
+      });
+      onClose();
+      setCreateRoomForm({ name: "", members: [] });
+      doReload();
+    } catch (e) {
+      console.error(e as Error);
+    }
+  }, [createRoomForm, user, doReload, onClose]);
 
-  const getOptions = React.useCallback(() => {
-    const options = ["Member 1", "Member 2", "Member 3", "Member 4"];
-    return options.filter((option) => !createRoomForm.members.includes(option));
-  }, [createRoomForm]);
+  const updateOptions = React.useCallback(async () => {
+    try {
+      const response = await fetch(
+        "https://autocar-user-worker.kishek12.workers.dev/users"
+      );
+      const usersInAutocar = await response.json<RoomMember[]>();
+      setMemberOptions(
+        usersInAutocar.filter((option) => option.id !== user.id)
+      );
+    } catch (e) {
+      console.error(e as Error);
+    }
+  }, [user]);
 
   const handleFormChange = React.useCallback(
     <T extends keyof CreateRoomFormProps>(
@@ -154,15 +199,38 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
   );
 
   const removeMember = React.useCallback(
-    (member: string) => {
+    (member: RoomMember) => {
       handleFormChange(
         "members",
         createRoomForm.members.filter(
-          (existingMember) => existingMember !== member
+          (existingMember) => existingMember.id !== member.id
         )
       );
     },
     [createRoomForm, handleFormChange]
+  );
+
+  React.useEffect(() => {
+    updateOptions();
+  }, [updateOptions]);
+
+  const getOptions = React.useCallback(() => {
+    return memberOptions.filter(
+      (option) =>
+        createRoomForm.members.filter((selected) => selected.id === option.id)
+          .length === 0
+    );
+  }, [memberOptions, createRoomForm]);
+
+  const getMemberFromId = React.useCallback(
+    (id: string) => {
+      const member = memberOptions.filter((member) => member.id === id);
+      if (member.length === 0) {
+        throw new Error("Error: can't find member...");
+      }
+      return member[0];
+    },
+    [memberOptions]
   );
 
   return (
@@ -196,6 +264,8 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
                 width: "calc(100% - 24px)",
                 borderRadius: "4px",
               }}
+              value={createRoomForm.name}
+              onChange={(e) => handleFormChange("name", e.target.value)}
               placeholder='Enter room name...'
             />
           </FormSection>
@@ -208,18 +278,20 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
                 onChange={(e) =>
                   handleFormChange("members", [
                     ...createRoomForm.members,
-                    e.target.value,
+                    getMemberFromId(e.target.value),
                   ])
                 }
               >
                 <option value='' disabled>
                   {createRoomForm.members.length === 0
                     ? "Select members to join your room..."
-                    : createRoomForm.members.join(", ")}
+                    : createRoomForm.members
+                        .map((member) => member.name)
+                        .join(", ")}
                 </option>
-                {getOptions().map((option) => (
-                  <option key={option} value={option}>
-                    {option}
+                {getOptions().map((member) => (
+                  <option key={member.id} value={member.id}>
+                    {member.name}
                   </option>
                 ))}
               </select>
@@ -247,7 +319,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
                 >
                   {createRoomForm.members.map((member) => (
                     <div
-                      key={member}
+                      key={member.id}
                       style={{
                         padding: "4px 8px",
                         borderRadius: "24px",
@@ -262,7 +334,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
                         gap: "4px",
                       }}
                     >
-                      <p style={{ fontSize: "10px" }}>{member}</p>
+                      <p style={{ fontSize: "10px" }}>{member.name}</p>
                       <Tooltip
                         label='Click to remove member.'
                         fontSize={10}
@@ -316,6 +388,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
               cursor: "pointer",
               fontSize: "12px",
             }}
+            onClick={handleSubmit}
           >
             Submit
           </button>

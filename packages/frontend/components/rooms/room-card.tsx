@@ -1,7 +1,15 @@
+import { Room } from "@platform/model";
 import React from "react";
 import { AvatarGroup } from "../avatar/avatar-group";
 
-export const RoomCard = () => {
+export const RoomCard: React.FC<Room> = ({
+  createdAt,
+  id,
+  members,
+  name,
+  owner,
+  updatedAt,
+}) => {
   return (
     <div
       style={{
@@ -37,7 +45,7 @@ export const RoomCard = () => {
             flexDirection: "column",
           }}
         >
-          <h4 style={{ fontWeight: 500, fontSize: "16px" }}>My Room</h4>
+          <h4 style={{ fontWeight: 500, fontSize: "16px" }}>{name}</h4>
           <span
             style={{
               color: "var(--violet-100)",
@@ -45,11 +53,46 @@ export const RoomCard = () => {
               fontSize: "12px",
             }}
           >
-            Updated 3 days ago
+            {getTimeAgo(new Date(updatedAt))}
           </span>
         </div>
-        <AvatarGroup avatars={[1, 2, 3]} />
+        <AvatarGroup avatars={members} />
       </div>
     </div>
   );
+};
+
+const MINUTE = 60;
+const HOUR = MINUTE * 60;
+const DAY = HOUR * 24;
+const WEEK = DAY * 7;
+const MONTH = DAY * 30;
+const YEAR = DAY * 365;
+
+export const getTimeAgo = (date: Date) => {
+  const secondsAgo = Math.round((Date.now() - Number(date)) / 1000);
+
+  if (secondsAgo < MINUTE) {
+    return secondsAgo + ` second${secondsAgo !== 1 ? "s" : ""} ago`;
+  }
+
+  let divisor;
+  let unit = "";
+
+  if (secondsAgo < HOUR) {
+    [divisor, unit] = [MINUTE, "min"];
+  } else if (secondsAgo < DAY) {
+    [divisor, unit] = [HOUR, "hour"];
+  } else if (secondsAgo < WEEK) {
+    [divisor, unit] = [DAY, "day"];
+  } else if (secondsAgo < MONTH) {
+    [divisor, unit] = [WEEK, "week"];
+  } else if (secondsAgo < YEAR) {
+    [divisor, unit] = [MONTH, "month"];
+  } else {
+    [divisor, unit] = [YEAR, "year"];
+  }
+
+  const count = Math.floor(secondsAgo / divisor);
+  return `${count} ${unit}${count > 1 ? "s" : ""} ago`;
 };

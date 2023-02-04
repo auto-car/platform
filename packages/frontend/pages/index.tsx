@@ -18,14 +18,18 @@ export default function Home() {
       picture: auth0User?.picture || undefined,
     };
 
-    const createUser = await fetch("http://127.0.0.1:8787/user", {
-      method: "POST",
-      body: JSON.stringify(user),
-    });
+    const createUser = await fetch(
+      "https://autocar-user-worker.kishek12.workers.dev/user",
+      {
+        method: "POST",
+        body: JSON.stringify(user),
+      }
+    );
 
     if (createUser.ok) {
       const createdUser = await createUser.json<User>();
       userDispatch({ type: "login", payload: createdUser });
+      localStorage.setItem("user", JSON.stringify(createdUser));
 
       router.push("/rooms");
     } else {
@@ -38,9 +42,11 @@ export default function Home() {
       console.log("Logged in user:", { auth0User });
       handleLogin();
     } else {
+      userDispatch({ type: "logout", payload: "" });
+      localStorage.removeItem("user");
       router.push("/login");
     }
-  }, [router, auth0User, handleLogin]);
+  }, [router, auth0User, handleLogin, userDispatch]);
 
   return <></>;
 }

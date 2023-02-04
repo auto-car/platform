@@ -22,6 +22,9 @@ export class StorageDO {
           "🚀🚀 AutoCAR User Worker: Alive and well!!",
           200
         );
+      case "/admin":
+        this.state.storage.deleteAll();
+        return decorateResponse("The deed is done.", 200);
       case "/room":
         switch (request.method) {
           case "POST":
@@ -62,11 +65,8 @@ class RoomService {
       };
 
       const room = await request.json<Partial<Room>>();
-      const createdRoomObj: Room = { ...roomDefaults, ...room };
       // Check if room with this id already exists
-      const existingObj = await state.storage.get<User>(
-        `room:${createdRoomObj.id}`
-      );
+      const existingObj = await state.storage.get<User>(`room:${room.id}`);
       if (existingObj) {
         return decorateResponse(
           "Error: Room with this id already exists.",
@@ -74,18 +74,43 @@ class RoomService {
         );
       }
 
+      let createdRoomObj: Room = { ...roomDefaults, ...room };
+      createdRoomObj = {
+        ...createdRoomObj,
+        members: [
+          {
+            id: createdRoomObj.owner.id,
+            name: createdRoomObj.owner.name,
+            picture: createdRoomObj.owner.picture,
+          },
+          ...createdRoomObj.members,
+        ],
+      };
+
+      for (const member of createdRoomObj.members) {
+        // Add this room record into all members' user records,
+        // including the owner.
+        const response = await this.env.USER.fetch(
+          "https://service-binding/user/room",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              id: member.id,
+              room: createdRoomObj,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          return decorateResponse(
+            "Error occurred when creating room: " + (await response.text()),
+            400
+          );
+        }
+      }
+
       // Add room to storage with id index
       await state.storage.put(`room:${createdRoomObj.id}`, createdRoomObj);
-
-      // Add room to the owner's rooms
-      await this.env.USER.fetch("/user/room", {
-        method: "POST",
-        body: JSON.stringify({
-          id: createdRoomObj.owner.id,
-          room: createdRoomObj,
-        }),
-      });
-
       return decorateResponse("Successfully created room!", 200);
     } catch (e) {
       return decorateResponse(
@@ -129,13 +154,14 @@ class RoomService {
       await state.storage.put(`room:${room.id}`, room);
 
       // Add room to new user's rooms
-      await this.env.USER.fetch("/user/room", {
+      await this.env.USER.fetch("https://service-binding/user/room", {
         method: "POST",
         body: JSON.stringify({
           id: newMember.id,
           room: room,
         }),
       });
+      return decorateResponse("Room shared successfully", 200);
     } catch (e) {
       return decorateResponse(
         "Error occurred when sharing room: " + (e as Error).message,
