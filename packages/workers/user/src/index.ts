@@ -15,7 +15,7 @@ export default {
 };
 
 const handleRequest = async (request: Request, env: Env) => {
-  const doId = env.STORAGE.idFromName("worker-autocar-user");
+  const doId = env.STORAGE.idFromName("autocar-storage");
   const obj = env.STORAGE.get(doId);
 
   return await obj.fetch(request);

@@ -1,0 +1,24 @@
+{
+  "name": "@platform/room-worker",
+  "description": "The room worker for the autoCAR platform 👨‍👩‍👧‍👦",
+  "version": "0.0.0",
+  "module": "dist/bundle.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "publish": "wrangler publish",
+    "format": "prettier --write  '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
+    "lint": "eslint --max-warnings=0 src && prettier --check '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
+    "build": "rollup -c"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@platform/model": "workspace:^",
+    "tsx": "^3.12.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "typescript",
+      "prettier"
+    ]
+  }
+}

@@ -22,8 +22,10 @@ export interface Room extends Identifiable {
   /**
    * Members of this room
    */
-  members: Pick<User, "picture" | "id" | "name">;
+  members: RoomMember[];
   /**
    * TODO: introduce content of room somehow.
    */
 }
+
+export type RoomMember = Pick<User, "picture" | "id" | "name">;

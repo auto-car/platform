@@ -1,6 +1,21 @@
 import React from "react";
+import { FilterType } from "./rooms-filterable-section";
 
-export const RoomsFilterSelector = () => {
+interface RoomsFilterSelectorProps {
+  selectedFilter: FilterType;
+  handleSelection: (filterType: FilterType) => void;
+}
+
+export const RoomsFilterSelector: React.FC<RoomsFilterSelectorProps> = ({
+  selectedFilter,
+  handleSelection,
+}) => {
+  const options = [
+    { label: "All Rooms", value: FilterType.All },
+    { label: "Created by Me", value: FilterType.CreatedByMe },
+    { label: "Shared with Me", value: FilterType.SharedWithMe },
+  ];
+
   return (
     <div
       style={{
@@ -26,10 +41,14 @@ export const RoomsFilterSelector = () => {
           fontSize: "12px",
           fontWeight: 400,
         }}
+        value={selectedFilter}
+        onChange={(e) => handleSelection(e.target.value as FilterType)}
       >
-        <option>All Rooms</option>
-        <option>Created by Me</option>
-        <option>Shared with Me</option>
+        {options.map((option, index) => (
+          <option value={option.value} key={index}>
+            {option.label}
+          </option>
+        ))}
       </select>
     </div>
   );
