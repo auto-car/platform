@@ -1,8 +1,6 @@
 .logoHeader,
 .logoHeaderSmall {
   position: fixed;
-  left: 48px;
-  top: 48px;
   display: flex;
   flex-direction: row;
   align-items: center;

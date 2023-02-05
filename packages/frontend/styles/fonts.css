@@ -32,11 +32,13 @@ button {
 
 :root {
   --violet-100: #f1cbff;
+  --violet-100-meta: #f1cbffc3;
   --violet-100-placeholder: #f1cbff65;
   --violet-100-placeholder-select: #f1cbff90;
   --violet-200: #c97afa;
   --violet-300: #3e005b;
   --violet-400: #1e062e;
+  --violet-450: #12021c;
   --violet-500: #06000d;
   --violet-500-light: #06000d20;
   --violet-600: #040008;

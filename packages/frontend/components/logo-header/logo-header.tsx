@@ -3,12 +3,21 @@ import styles from "./logo-header.module.css";
 
 interface LogoHeaderProps {
   size?: "normal" | "small";
+  isRelative?: boolean;
 }
 
-export const LogoHeader: React.FC<LogoHeaderProps> = ({ size = "normal" }) => {
+export const LogoHeader: React.FC<LogoHeaderProps> = ({
+  size = "normal",
+  isRelative = false,
+}) => {
   return (
     <div
       className={size === "normal" ? styles.logoHeader : styles.logoHeaderSmall}
+      style={{
+        position: isRelative ? "relative" : "fixed",
+        left: isRelative ? "unset" : "48px",
+        top: isRelative ? "unset" : "48px",
+      }}
     >
       <Image
         alt='logo'

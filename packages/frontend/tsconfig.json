@@ -7,7 +7,9 @@
     "target": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["@cloudflare/workers-types", "jest"],
-    "paths": {},
+    "paths": {
+      "@platform/model": ["../model"]
+    },
     "allowJs": true,
     "jsx": "preserve"
   },

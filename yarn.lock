@@ -1421,7 +1421,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chakra-ui/system@npm:2.4.0":
+"@chakra-ui/system@npm:2.4.0, @chakra-ui/system@npm:^2.3.8":
   version: 2.4.0
   resolution: "@chakra-ui/system@npm:2.4.0"
   dependencies:
@@ -2249,6 +2249,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@juggle/resize-observer@npm:^3.3.1":
+  version: 3.4.0
+  resolution: "@juggle/resize-observer@npm:3.4.0"
+  checksum: 2505028c05cc2e17639fcad06218b1c4b60f932a4ebb4b41ab546ef8c157031ae377e3f560903801f6d01706dbefd4943b6c4704bf19ed86dfa1c62f1473a570
+  languageName: node
+  linkType: hard
+
 "@liveblocks/client@npm:0.19.7, @liveblocks/client@npm:^0.19.7":
   version: 0.19.7
   resolution: "@liveblocks/client@npm:0.19.7"
@@ -2749,6 +2756,7 @@ __metadata:
     "@liveblocks/node": ^0.19.7
     "@liveblocks/react": ^0.19.7
     "@next/font": 13.0.7
+    "@platform/model": "workspace:^"
     "@types/node": 18.11.17
     "@types/react": 18.0.26
     "@types/react-dom": 18.0.9
@@ -2767,6 +2775,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@platform/model@workspace:packages/model"
   dependencies:
+    "@liveblocks/client": ^0.19.7
     eslint: 8.30.0
     typescript: 4.9.4
   languageName: unknown
@@ -2794,6 +2803,49 @@ __metadata:
   version: 2.11.6
   resolution: "@popperjs/core@npm:2.11.6"
   checksum: 47fb328cec1924559d759b48235c78574f2d71a8a6c4c03edb6de5d7074078371633b91e39bbf3f901b32aa8af9b9d8f82834856d2f5737a23475036b16817f0
+  languageName: node
+  linkType: hard
+
+"@react-hook/latest@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@react-hook/latest@npm:1.0.3"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 2408c9cd35c5cfa7697b6da3bc5eebef254a932ade70955074c474f23be7dd3e2f81bbba12edcc9208bd0f89c6ed366d6b11d4f6d7b1052877a0bac8f74afad4
+  languageName: node
+  linkType: hard
+
+"@react-hook/passive-layout-effect@npm:^1.2.0":
+  version: 1.2.1
+  resolution: "@react-hook/passive-layout-effect@npm:1.2.1"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 217cb8aa90fb8e677672319a9a466d7752890cf4357c76df000b207696e9cc717cf2ee88080671cc9dae238a82f92093ab4f61ab2f6032d2a8db958fc7d99b5d
+  languageName: node
+  linkType: hard
+
+"@react-hook/resize-observer@npm:^1.2.1":
+  version: 1.2.6
+  resolution: "@react-hook/resize-observer@npm:1.2.6"
+  dependencies:
+    "@juggle/resize-observer": ^3.3.1
+    "@react-hook/latest": ^1.0.2
+    "@react-hook/passive-layout-effect": ^1.2.0
+  peerDependencies:
+    react: ">=16.8"
+  checksum: d2ff6c50e847514acad774f2a4010fb1e6782a231ae00c9507c1a98028b3a26399e35f094170918f11b1eeafc581d60da7641bc178d496abf00c56eee8a6b36b
+  languageName: node
+  linkType: hard
+
+"@react-hook/size@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@react-hook/size@npm:2.1.2"
+  dependencies:
+    "@react-hook/passive-layout-effect": ^1.2.0
+    "@react-hook/resize-observer": ^1.2.1
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 89876e93957f420ba63518b60992b46ca82b0d12da0cf50ad487461e0b4230ec0e036ecf100840e2b2e93c9101895ad33e8bd6bc02a25641c28c904a09ab2563
   languageName: node
   linkType: hard
 
@@ -3601,6 +3653,7 @@ __metadata:
     "@auth0/nextjs-auth0": ^2.2.1
     "@chakra-ui/icons": ^2.0.17
     "@chakra-ui/react": ^2.4.9
+    "@chakra-ui/system": ^2.3.8
     "@cloudflare/workers-types": ^4.20230115.0
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
@@ -3612,6 +3665,7 @@ __metadata:
     "@platform/model": "workspace:^"
     "@platform/room-worker": "workspace:^"
     "@platform/user-worker": "workspace:^"
+    "@react-hook/size": ^2.1.2
     "@rollup/plugin-commonjs": ^24.0.1
     "@rollup/plugin-node-resolve": ^15.0.1
     "@rollup/plugin-terser": ^0.4.0
@@ -3634,6 +3688,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-spinners: ^0.13.8
+    react-zoom-pan-pinch: ^2.5.0
     rollup: ^3.12.0
     rollup-plugin-copy: ^3.4.0
     typescript: ^4.9.4
@@ -8222,6 +8277,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 7ee8ef3aab74c7ae1d70ff34a27643d11ba1a8d62d072c767827d9ff9a520905223e567002e0bf6c772929d8ea1c781a3ba0cc4a563e92b1e3dc2eaa817ecbe8
+  languageName: node
+  linkType: hard
+
+"react-zoom-pan-pinch@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "react-zoom-pan-pinch@npm:2.5.0"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: c55d314c682ba60a5e8a9ff2446cb680308b3e546f15a3dbebee651d11273a74758de5ac375f4fa86c193f22afb7185a8475f179cf0d463783ef4daf23a025b0
   languageName: node
   linkType: hard
 

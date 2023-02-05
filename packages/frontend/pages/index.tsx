@@ -19,7 +19,7 @@ export default function Home() {
     };
 
     const createUser = await fetch(
-      "https://autocar-user-worker.kishek12.workers.dev/user",
+      process.env.NEXT_PUBLIC_USER_WORKER_URL + "/user",
       {
         method: "POST",
         body: JSON.stringify(user),

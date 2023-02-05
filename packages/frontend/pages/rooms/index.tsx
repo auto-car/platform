@@ -26,7 +26,7 @@ export default function Rooms() {
   const getRooms = React.useCallback(async () => {
     try {
       const response = await fetch(
-        `https://autocar-user-worker.kishek12.workers.dev/user/rooms?id=${user.id}`
+        `${process.env.NEXT_PUBLIC_USER_WORKER_URL}/user/rooms?id=${user.id}`
       );
       const rooms = await response.json<Room[]>();
       setRooms(rooms);
@@ -159,7 +159,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
 
   const handleSubmit = React.useCallback(async () => {
     try {
-      await fetch("https://autocar-room-worker.kishek12.workers.dev/room", {
+      await fetch(process.env.ROOM_WORKER_URL + "/room", {
         method: "POST",
         body: JSON.stringify({
           ...createRoomForm,
@@ -177,7 +177,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
   const updateOptions = React.useCallback(async () => {
     try {
       const response = await fetch(
-        "https://autocar-user-worker.kishek12.workers.dev/users"
+        process.env.NEXT_PUBLIC_USER_WORKER_URL + "/users"
       );
       const usersInAutocar = await response.json<RoomMember[]>();
       setMemberOptions(

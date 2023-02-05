@@ -1,18 +1,16 @@
 import React from "react";
-import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
+import { LiveList, LiveObject } from "@liveblocks/client";
 import { ClientSideSuspense } from "@liveblocks/react";
 import { useRouter } from "next/router";
 import { GridLoader } from "react-spinners";
 import { PageHeader } from "../components/page-header";
-import { RoomProvider, useOthers } from "../liveblocks.config";
-import {
-  DashboardScreen,
-  MenuType,
-} from "../screens/dashboard/dashboard-screen";
+import { RoomProvider } from "../liveblocks.config";
+import { DashboardScreen } from "../screens/dashboard/dashboard-screen";
+import { RoomContent } from "@platform/model";
+import { MenuType } from "../components/dashboard/types";
 
 export default function Dashboard() {
   const [roomId, setRoomId] = React.useState("");
-
   const router = useRouter();
 
   React.useEffect(() => {
@@ -24,39 +22,32 @@ export default function Dashboard() {
   if (roomId === "") {
     return <LoadingScreen />;
   }
+
+  const initialStorage: RoomContent = {
+    annotations: new LiveList([]),
+    availableColours: new LiveList([
+      "blue",
+      "green",
+      "orange",
+      "pink",
+      "violet",
+    ]),
+    id: roomId,
+    selectedScreen: new LiveObject({ selectedScreen: MenuType.ANALYSE }),
+  };
+
   return (
-    <RoomProvider
-      id={roomId}
-      initialPresence={{ cursor: null }}
-      initialStorage={{
-        selectedScreen: new LiveObject({
-          selectedScreen: MenuType.ANALYSE,
-        }),
-        showExpanded: new LiveObject({ showExpanded: false }),
-        showGraph: new LiveObject({ showGraph: false }),
-        annotations: new LiveList<{
-          id: string;
-          annotations: {
-            x: number;
-            y: number;
-            comment: string;
-            colour: string;
-          }[];
-        }>([]),
-        availableColours: new LiveList<string>([
-          "green",
-          "violet",
-          "blue",
-          "orange",
-          "pink",
-        ]),
-      }}
-    >
-      <PageHeader title="AutoCAR | Dashboard" />
-      <ClientSideSuspense fallback={<LoadingScreen />}>
-        {() => <DashboardScreen roomId={roomId} />}
-      </ClientSideSuspense>
-    </RoomProvider>
+    // <RoomProvider
+    //   id={roomId}
+    //   initialPresence={{ cursor: null }}
+    //   initialStorage={{ ...initialStorage }}
+    // >
+    //   <PageHeader title='AutoCAR | Dashboard' />
+    //   <ClientSideSuspense fallback={<LoadingScreen />}>
+    //     {() => <DashboardScreen roomId={roomId} />}
+    //   </ClientSideSuspense>
+    // </RoomProvider>
+    <DashboardScreen roomId={roomId} />
   );
 }
 
@@ -74,7 +65,7 @@ const LoadingScreen = () => (
       gap: "24px",
     }}
   >
-    <GridLoader color="var(--violet-100)" size={24} />
+    <GridLoader color='var(--violet-100)' size={24} />
     <h1>Loading...</h1>
   </div>
 );

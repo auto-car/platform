@@ -27,10 +27,12 @@ export class StorageDO {
         return decorateResponse("The deed is done.", 200);
       case "/room":
         switch (request.method) {
+          case "GET":
+            return this.roomService.getRoomById(request, this.state);
           case "POST":
             return this.roomService.createRoom(request, this.state);
           default:
-            return decorateResponse("Base user endpoint", 200);
+            return decorateResponse("Base room endpoint", 200);
         }
       case "/rooms":
         return decorateResponse(
@@ -50,6 +52,32 @@ class RoomService {
 
   constructor(env: Env) {
     this.env = env;
+  }
+
+  async getRoomById(request: Request, state: DurableObjectState) {
+    try {
+      const url = new URL(request.url);
+      const roomId = url.searchParams.get("id");
+      if (!roomId) {
+        return decorateResponse("Error: id not provided", 400);
+      }
+      console.log(roomId);
+
+      const room = await state.storage.get(`room:${roomId}`);
+      if (!room) {
+        return decorateResponse(
+          "Error: room with id " + roomId + " does not exist",
+          400
+        );
+      }
+
+      return decorateResponse(JSON.stringify(room), 200);
+    } catch (e) {
+      return decorateResponse(
+        "Error occurred when getting room: " + (e as Error).message,
+        400
+      );
+    }
   }
 
   async createRoom(request: Request, state: DurableObjectState) {

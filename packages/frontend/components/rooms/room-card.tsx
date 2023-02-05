@@ -1,4 +1,5 @@
 import { Room } from "@platform/model";
+import { useRouter } from "next/router";
 import React from "react";
 import { AvatarGroup } from "../avatar/avatar-group";
 
@@ -10,6 +11,11 @@ export const RoomCard: React.FC<Room> = ({
   owner,
   updatedAt,
 }) => {
+  const router = useRouter();
+  const handleRedirect = React.useCallback(() => {
+    router.push(`/dashboard?room=${id}`);
+  }, [router, id]);
+
   return (
     <div
       style={{
@@ -21,6 +27,7 @@ export const RoomCard: React.FC<Room> = ({
         background: "var(--violet-400)",
         cursor: "pointer",
       }}
+      onClick={handleRedirect}
     >
       <div
         style={{

@@ -3,14 +3,20 @@ import { LogoutIcon } from "icons/logout-icon";
 import { useRouter } from "next/router";
 import { UserAvatar } from "./avatar/user-avatar";
 import styles from "./user-profile-button.module.css";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { UserContext } from "context/user-context";
 
-export const UserProfileButton = () => {
+interface UserProfileButtonProps {
+  isRelative?: boolean;
+}
+
+export const UserProfileButton: React.FC<UserProfileButtonProps> = ({
+  isRelative = false,
+}) => {
   const [showProfileActions, setShowProfileActions] = React.useState(false);
-  const { user } = useUser();
+  const { user } = React.useContext(UserContext);
 
   const name = React.useMemo(() => {
-    const userName = user?.name;
+    const userName = user.name;
     if (userName) {
       if (userName.includes(" ")) {
         return userName.split(" ")[0];
@@ -28,9 +34,9 @@ export const UserProfileButton = () => {
         flexDirection: "row",
         alignItems: "center",
         gap: "8px",
-        position: "fixed",
-        right: "48px",
-        top: "48px",
+        position: isRelative ? "relative" : "fixed",
+        right: !isRelative ? "48px" : "unset",
+        top: !isRelative ? "48px" : "unset",
         cursor: "pointer",
       }}
       onClick={() => setShowProfileActions((prev) => !prev)}
@@ -43,7 +49,7 @@ export const UserProfileButton = () => {
           height: 36,
         }}
       >
-        <UserAvatar src={user?.picture} />
+        <UserAvatar src={user.picture} name={user.name} />
         {showProfileActions ? <UserProfileButtonMenu /> : null}
       </div>
       <p style={{ color: "var(--violet-100)", pointerEvents: "none" }}>
