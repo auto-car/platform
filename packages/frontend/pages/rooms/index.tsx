@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import styles from "../../components/rooms/create-room-dialog.module.css";
+import { FormSection } from "../../components/rooms/form-section";
 
 export default function Rooms() {
   const [rooms, setRooms] = React.useState<Room[]>([]);
@@ -395,20 +396,5 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
-};
-
-const FormSection: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "4px",
-        fontWeight: 500,
-      }}
-    >
-      {children}
-    </div>
   );
 };

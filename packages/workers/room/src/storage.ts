@@ -19,7 +19,7 @@ export class StorageDO {
     switch (url.pathname) {
       case "/":
         return decorateResponse(
-          "🚀🚀 AutoCAR User Worker: Alive and well!!",
+          "🚀🚀 AutoCAR Room Worker: Alive and well!!",
           200
         );
       case "/admin":
@@ -61,7 +61,6 @@ class RoomService {
       if (!roomId) {
         return decorateResponse("Error: id not provided", 400);
       }
-      console.log(roomId);
 
       const room = await state.storage.get(`room:${roomId}`);
       if (!room) {

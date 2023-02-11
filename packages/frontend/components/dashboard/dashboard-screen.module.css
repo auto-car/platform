@@ -251,3 +251,7 @@
 .shareIcon {
   fill: var(--violet-100);
 }
+
+.textInput::placeholder {
+  color: var(--violet-100-placeholder);
+}

@@ -66,7 +66,6 @@ class UserService {
       if (!userId) {
         return decorateResponse("Error: id not provided", 400);
       }
-      console.log(userId);
       const user = await state.storage.get(`user:${userId}`);
       if (!user) {
         return decorateResponse(

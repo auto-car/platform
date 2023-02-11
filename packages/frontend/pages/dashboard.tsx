@@ -2,12 +2,12 @@ import React from "react";
 import { LiveList, LiveObject } from "@liveblocks/client";
 import { ClientSideSuspense } from "@liveblocks/react";
 import { useRouter } from "next/router";
-import { GridLoader } from "react-spinners";
 import { PageHeader } from "../components/page-header";
 import { RoomProvider } from "../liveblocks.config";
 import { DashboardScreen } from "../screens/dashboard/dashboard-screen";
 import { RoomContent } from "@platform/model";
 import { MenuType } from "../components/dashboard/types";
+import { LoadingDialog } from "components/dashboard/loading-dialog";
 
 export default function Dashboard() {
   const [roomId, setRoomId] = React.useState("");
@@ -34,20 +34,22 @@ export default function Dashboard() {
     ]),
     id: roomId,
     selectedScreen: new LiveObject({ selectedScreen: MenuType.ANALYSE }),
+    datasetUmapURL: new LiveObject({ datasetUmapURL: "" }),
+    loadingDatasetUMAP: new LiveObject({ loadingDatasetUMAP: false }),
+    selectedDataset: new LiveObject({ selectedDataset: null }),
   };
 
   return (
-    // <RoomProvider
-    //   id={roomId}
-    //   initialPresence={{ cursor: null }}
-    //   initialStorage={{ ...initialStorage }}
-    // >
-    //   <PageHeader title='AutoCAR | Dashboard' />
-    //   <ClientSideSuspense fallback={<LoadingScreen />}>
-    //     {() => <DashboardScreen roomId={roomId} />}
-    //   </ClientSideSuspense>
-    // </RoomProvider>
-    <DashboardScreen roomId={roomId} />
+    <RoomProvider
+      id={roomId}
+      initialPresence={{ cursor: null }}
+      initialStorage={{ ...initialStorage }}
+    >
+      <PageHeader title='AutoCAR | Dashboard' />
+      <ClientSideSuspense fallback={<LoadingScreen />}>
+        {() => <DashboardScreen roomId={roomId} />}
+      </ClientSideSuspense>
+    </RoomProvider>
   );
 }
 
@@ -65,7 +67,10 @@ const LoadingScreen = () => (
       gap: "24px",
     }}
   >
-    <GridLoader color='var(--violet-100)' size={24} />
-    <h1>Loading...</h1>
+    <LoadingDialog
+      title='Loading your room...'
+      expectedTime={1}
+      isOpen={true}
+    />
   </div>
 );

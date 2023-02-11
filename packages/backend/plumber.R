@@ -10,13 +10,13 @@ library("patchwork")
 #* Base Endpoint
 #* @get /
 function() {
-    list(msg = paste("🚀🚀 AutoCAR Platform Analytics looking healthy!!"))
+    "🚀🚀 AutoCAR Platform R Service looking healthy!!"
 }
 
 #* Health Check
 #* @get /health
 function() {
-    list(msg = paste("🚀🚀 AutoCAR Platform Analytics looking healthy!!"))
+    "🚀🚀 AutoCAR Platform R Service looking healthy!!"
 }
 
 #* Text File Test
@@ -27,16 +27,20 @@ function(f) {
     list(msg = paste(content))
 }
 
-#* 10X Dataset
-#* @param files:[file] dataset_name:string
+#* Upload a Dataset (10X Format)
+#* @param files:[file] dataset_name:string dataset_category:string
 #* @post /upload-10X
-function(files, dataset_name) {
+function(files, dataset_name, dataset_category) {
     print(paste("======= Creating Dataset ",
         paste(dataset_name, " =======", sep = ""), sep = "")
     )
+    fnames <- names(files)
+    dir_name_prefix <- paste("data/", dataset_category, sep = "")
+    dir_name_prefix <- paste(dir_name_prefix, "/", sep = "")
 
-    dir_name <- paste("data/", dataset_name, sep = "")
+    dir_name <- paste(dir_name_prefix, dataset_name, sep = "")
     dir.create(dir_name, showWarnings = FALSE, recursive = TRUE)
+
     file_names <- names(files)
     file_path_prefix <- paste(dir_name, "/", sep = "")
     file_index <- 1
@@ -50,7 +54,7 @@ function(files, dataset_name) {
         } else {
             file_content <- file[[1]]
         }
-        write(file_content, file = file_path)
+        write(trimws(file_content), file = file_path, sep = "")
         print(paste("======= -> wrote file ",
             paste(file_path, " =======", sep = ""),
         sep = ""))
@@ -64,13 +68,87 @@ function(files, dataset_name) {
 #* @get /datasets
 function() {
     datasets <- list.dirs(path = "./data", full.names = TRUE, recursive = TRUE)
-    amended_datasets <- datasets[- 1]
-    for (index in seq_along(length(amended_datasets))) {
-        amended_datasets[[index]] <- str_split(
-            amended_datasets[[index]], "./data/"
-        )[[1]][2]
+    #
+    # Datasets contains a top to bottom list of the dir structure. Example:
+    # ./data
+    # ./data/UNSW Immunogenomics
+    # ./data/UNSW Immunogenomics/abseq
+    # ./data/UNSW Immunogenomics/dataset-2
+    # ./data/UNSW Immunogenomics/car-t-cells
+    # ./data/10X Genomics
+    # ./data/10X Genomics/abseq
+    # ./data/10X Genomics/hello
+    # ./data/10X Genomics/there
+    #
+
+    ## Goal: extract a map between category (key) and dataset (value)
+    ## Eg:
+    ## {
+    ##  category: "UNSW Immunogenomics",
+    ##  datasets: [
+    ##    {
+    ##      name: "abseq",
+    ##      createdAt: Date String,
+    ##      updatedAt: Date String,
+    ##      hasOutput: boolean, (whether UMAP has been
+    ##                  generated for this already)
+    ##    }
+    ##  ]
+    ## }
+
+    if (length(datasets) <= 1) {
+        list()
+    } else {
+        amended_datasets <- datasets[- 1]
+        added_categories <- 0
+        added_datasets <- 1
+        final_list <- list()
+        category <- ""
+        category_object <- list()
+
+        for (index in seq(from = 1, to = length(amended_datasets))) {
+            dir_value <- amended_datasets[[index]]
+            no_of_slash <- lengths(regmatches(dir_value, gregexpr("/", dir_value)))
+
+            if (no_of_slash == 2) {
+                if (added_categories > 0) {
+                    final_list[[added_categories]] <- category_object
+                }
+                added_categories <- added_categories + 1
+                category <- str_split(dir_value, "./data/")[[1]][2]
+                category_object <- list()
+                category_object[["category"]] <- category
+                category_object[["datasets"]] <- list()
+                added_datasets <- 1
+            } else {
+                str_to_split <- paste("./data/", category, sep = "")
+                dataset_name <- str_split(dir_value, str_to_split)[[1]][2]
+                dataset_created_at <- file.info(dir_value)$ctime
+                dataset_updated_at <- file.info(dir_value)$mtime
+
+                expected_output_path_prefix <- paste(dir_value, "/", sep = "")
+                expected_output_path <- paste(
+                    expected_output_path_prefix,
+                    "output.png",
+                    sep = ""
+                )
+                dataset_has_output <- file.exists(expected_output_path)
+
+                dataset_object <- c()
+                dataset_object[["name"]] <- dataset_name
+                dataset_object[["createdAt"]] <- dataset_created_at
+                dataset_object[["updatedAt"]] <- dataset_updated_at
+                dataset_object[["hasOutput"]] <- dataset_has_output
+
+                category_object[["datasets"]][[added_datasets]] <- dataset_object
+                added_datasets <- added_datasets + 1
+            }
+        }
+
+        final_list[[added_categories]] <- category_object
+
+        final_list
     }
-    amended_datasets
 }
 
 #* Download UMAP Image for Dataset
@@ -138,5 +216,5 @@ handle_umap <- function(dataset_dir, dataset_project) {
     plot_output <- DimPlot(dataset, reduction = "umap", label = TRUE)
 
     output_image_filename <- paste(dataset_dir, "/output.png", sep = "")
-    ggsave(output_image_filename, plot_output)
+    ggsave(output_image_filename, plot_output, width = 16, height = 9)
 }

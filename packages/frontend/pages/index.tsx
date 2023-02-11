@@ -39,7 +39,6 @@ export default function Home() {
 
   React.useEffect(() => {
     if (auth0User) {
-      console.log("Logged in user:", { auth0User });
       handleLogin();
     } else {
       userDispatch({ type: "logout", payload: "" });

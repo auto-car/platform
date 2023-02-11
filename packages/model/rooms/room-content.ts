@@ -22,4 +22,7 @@ export interface RoomContent extends Identifiable {
     }[]
   >;
   availableColours: LiveList<AvailableColor>;
+  selectedDataset: LiveObject<{ selectedDataset: string | null }>;
+  loadingDatasetUMAP: LiveObject<{ loadingDatasetUMAP: boolean }>;
+  datasetUmapURL: LiveObject<{ datasetUmapURL: string }>;
 }

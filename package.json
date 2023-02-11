@@ -17,6 +17,8 @@
     "user-worker:publish": "yarn workspace @platform/user-worker publish",
     "room-worker:dev": "yarn workspace @platform/room-worker dev",
     "room-worker:publish": "yarn workspace @platform/room-worker publish",
+    "analysis-worker:dev": "yarn workspace @platform/analysis-worker dev",
+    "analysis-worker:publish": "yarn workspace @platform/analysis-worker publish",
     "workspaces:list": "yarn workspaces list --json"
   },
   "packageManager": "yarn@3.3.1",
@@ -27,6 +29,7 @@
   ],
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230115.0",
+    "@platform/analysis-worker": "workspace:^",
     "@platform/frontend": "workspace:^",
     "@platform/model": "workspace:^",
     "@platform/room-worker": "workspace:^",
@@ -66,9 +69,11 @@
     "eslint-config-next": "13.0.7",
     "framer-motion": "^9.0.1",
     "next": "13.0.7",
+    "nodemon": "^2.0.20",
     "normalize.css": "^8.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-select": "^5.7.0",
     "react-spinners": "^0.13.8",
     "react-zoom-pan-pinch": "^2.5.0",
     "typescript": "4.9.4"

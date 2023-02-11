@@ -18,13 +18,6 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const result = await authorize({
     room,
     secret,
-    userId: "123", // Optional
-    groupIds: ["456"], // Optional
-    userInfo: {
-      // Optional, corresponds to the UserMeta[info] type defined in liveblocks.config.ts
-      name: "Ada Lovelace",
-      color: "red",
-    },
   });
   return res.status(result.status).end(result.body);
 }

@@ -1,1 +1,1 @@
-RScript ./runPlumber.R
+RScript runPlumber.R

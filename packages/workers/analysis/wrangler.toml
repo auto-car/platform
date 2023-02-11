@@ -1,0 +1,13 @@
+name = "autocar-analysis-worker"
+main = "./dist/index.mjs"
+compatibility_date = "2022-09-08"
+
+[build]
+command = "yarn build"
+
+[durable_objects]
+bindings = [{name = "STORAGE", class_name = "StorageDO"}]
+
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["StorageDO"]
