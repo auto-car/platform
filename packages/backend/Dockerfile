@@ -1,4 +1,4 @@
-FROM satijalab/seurat
+FROM rocker/tidyverse
 LABEL org.opencontainers.image.authors="Docker User <docker@user.org>"
 
 RUN R -e "options(warn = 2); install.packages('plumber', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
