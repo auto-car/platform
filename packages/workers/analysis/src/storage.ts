@@ -35,14 +35,14 @@ export class StorageDO {
 
 class AnalysisService {
   public async healthCheck() {
-    const response = await fetch("http://127.0.0.1:8000/");
+    const response = await fetch("http://autocar-backend.fly.dev/");
     const text = (await response.json<string[]>())[0];
 
     return decorateResponse(text, 200);
   }
 
   public async getDatasets() {
-    const response = await fetch("http://127.0.0.1:8000/datasets");
+    const response = await fetch("http://autocar-backend.fly.dev/datasets");
     const datasets = await response.json<DatasetCategory[]>();
 
     return decorateResponse(JSON.stringify(datasets), 200);
@@ -55,7 +55,7 @@ class AnalysisService {
       const datasetCategory = url.searchParams.get("datasetCategory");
       const formData = await request.formData();
       const response = await fetch(
-        `http://127.0.0.1:8000/upload-10X?dataset_name=${datasetName}&dataset_category=${datasetCategory}`,
+        `https://autocar-backend.fly.dev/upload-10X?dataset_name=${datasetName}&dataset_category=${datasetCategory}`,
         {
           method: "POST",
           body: formData,
@@ -87,7 +87,7 @@ class AnalysisService {
           );
         }
         const response = await fetch(
-          `http://127.0.0.1:8000/download-umap?dataset=${encodeURI(
+          `http://autocar-backend.fly.dev/download-umap?dataset=${encodeURI(
             datasetName || ""
           )}`
         );

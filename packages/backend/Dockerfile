@@ -1,15 +1,26 @@
-FROM rocker/tidyverse
-LABEL org.opencontainers.image.authors="Docker User <docker@user.org>"
+FROM rocker/r-ver:4.2.1
 
-RUN R -e "options(warn = 2); install.packages('plumber', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
-RUN R -e "options(warn = 2); install.packages('broom', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
-RUN R -e "options(warn = 2); install.packages('sourcetools', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
-# RUN R -e "options(warn = 2); install.packages('Seurat', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
-RUN R -e "options(warn = 2); install.packages('tidyverse', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
-RUN R -e "options(warn = 2); install.packages('dplyr', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
-RUN R -e "options(warn = 2); install.packages('patchwork', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
-RUN R -e "options(warn = 2); install.packages('ggplot2', repos = 'https://cran.rstudio.com/', dependencies = TRUE)"
+EXPOSE 8000
 
-COPY . .
+RUN apt-get update -qq && apt-get install -y \
+  libssl-dev \
+  libcurl4-gnutls-dev \ 
+  libgeos-dev \
+  libxml2-dev \
+  libpng-dev \
+  libhdf5-dev \
+  libfftw3-dev \
+  libgsl-dev \
+  pkg-config \
+  libboost-all-dev \
+  libglpk-dev
 
-CMD ["sessionInfo()"]
+RUN mkdir -p app
+
+COPY .  app
+WORKDIR /app
+
+RUN R -e "install.packages(c('plumber', 'sourcetools', 'tidyverse', 'dplyr', 'patchwork', 'ggplot2'))"
+RUN R -e "install.packages('Seurat', dependencies = TRUE)"
+
+ENTRYPOINT ["Rscript", "runPlumber.R"]

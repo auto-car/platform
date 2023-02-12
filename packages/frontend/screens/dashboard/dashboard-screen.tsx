@@ -246,7 +246,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ roomId }) => {
 
   return (
     <>
-      <PageHeader title='AutoCAR | ' />
+      <PageHeader title={`AutoCAR | ${room.name}`} />
       <div
         style={{
           width: "100vw",
