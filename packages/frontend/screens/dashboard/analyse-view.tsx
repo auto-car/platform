@@ -6,67 +6,69 @@ import { useMutation, useStorage } from "../../liveblocks.config";
 import { LiveList, LiveObject } from "@liveblocks/client";
 import Image from "next/image";
 
-export const AnalyseView = () => {
-  const showGraph = (
-    useStorage((root) => root.showGraph) as { showGraph: boolean }
-  ).showGraph;
+// export const AnalyseView = () => {
+//   const showGraph = (
+//     useStorage((root) => root.showGraph) as { showGraph: boolean }
+//   ).showGraph;
 
-  const updateShowGraph = useMutation(({ storage }) => {
-    const mutableShowGraph = storage.get("showGraph") as LiveObject<{
-      showGraph: boolean;
-    }>;
-    if (mutableShowGraph) {
-      mutableShowGraph.set("showGraph", true);
-    }
-  }, []);
+//   const updateShowGraph = useMutation(({ storage }) => {
+//     const mutableShowGraph = storage.get("showGraph") as LiveObject<{
+//       showGraph: boolean;
+//     }>;
+//     if (mutableShowGraph) {
+//       mutableShowGraph.set("showGraph", true);
+//     }
+//   }, []);
 
-  return (
-    <div className={styles.mainBody}>
-      <hgroup className={dashboardStyles.dashboardViewHGroup}>
-        <h1 className={dashboardStyles.dashboardViewHeading}>Analyse</h1>
-        <p className={dashboardStyles.dashboardViewDescription}>
-          Analyse single or multiple datasets collaboratively.
-        </p>
-      </hgroup>
-      <section className={styles.section}>
-        <hgroup className={styles.sectionHGroup}>
-          <h2 className={styles.sectionHeading}>Upload your data</h2>
-          <p className={styles.sectionDescription}>
-            To begin the analysis process, please upload your quality-controlled
-            dataset file.
-          </p>
-        </hgroup>
-        <button className={styles.uploadButton} onClick={updateShowGraph}>
-          <UploadIcon width={24} height={24} className={styles.uploadIcon} />
-          <p>Upload Data</p>
-        </button>
-      </section>
-      {showGraph ? (
-        <section className={styles.section}>
-          <hgroup className={styles.sectionHGroup}>
-            <h2 className={styles.sectionHeading}>Visualisation</h2>
-            <p className={styles.sectionDescription}>
-              To add an annotation, click on the visualisations below.
-            </p>
-          </hgroup>
-          <div className={styles.visualisationRow}>
-            {["mock-visualisation-1", "mock-visualisation-2"].map(
-              (visualisationId, index) => (
-                <Visualisation visualisationId={visualisationId} key={index} />
-              )
-            )}
-          </div>
-        </section>
-      ) : null}
-    </div>
-  );
-};
+//   return (
+//     <div className={styles.mainBody}>
+//       <hgroup className={dashboardStyles.dashboardViewHGroup}>
+//         <h1 className={dashboardStyles.dashboardViewHeading}>Analyse</h1>
+//         <p className={dashboardStyles.dashboardViewDescription}>
+//           Analyse single or multiple datasets collaboratively.
+//         </p>
+//       </hgroup>
+//       <section className={styles.section}>
+//         <hgroup className={styles.sectionHGroup}>
+//           <h2 className={styles.sectionHeading}>Upload your data</h2>
+//           <p className={styles.sectionDescription}>
+//             To begin the analysis process, please upload your quality-controlled
+//             dataset file.
+//           </p>
+//         </hgroup>
+//         <button className={styles.uploadButton} onClick={updateShowGraph}>
+//           <UploadIcon width={24} height={24} className={styles.uploadIcon} />
+//           <p>Upload Data</p>
+//         </button>
+//       </section>
+//       {showGraph ? (
+//         <section className={styles.section}>
+//           <hgroup className={styles.sectionHGroup}>
+//             <h2 className={styles.sectionHeading}>Visualisation</h2>
+//             <p className={styles.sectionDescription}>
+//               To add an annotation, click on the visualisations below.
+//             </p>
+//           </hgroup>
+//           <div className={styles.visualisationRow}>
+//             {["mock-visualisation-1", "mock-visualisation-2"].map(
+//               (visualisationId, index) => (
+//                 <Visualisation visualisationId={visualisationId} key={index} />
+//               )
+//             )}
+//           </div>
+//         </section>
+//       ) : null}
+//     </div>
+//   );
+// };
 
 interface VisualisationProps {
-  visualisationId: string;
+  lBDatasetUmapURL: string;
 }
 
-const Visualisation: React.FC<VisualisationProps> = ({ visualisationId }) => {
+export const Visualisation: React.FC<VisualisationProps> = ({
+  lBDatasetUmapURL,
+}) => {
   const [annotationTempValue, setAnnotationTempValue] = React.useState("");
   const [showAnnotationEditor, setShowAnnotationEditor] = React.useState({
     isOpen: false,
@@ -94,7 +96,7 @@ const Visualisation: React.FC<VisualisationProps> = ({ visualisationId }) => {
     [annotations]
   );
 
-  const visualisationAnnotations = getAnnotationsById(visualisationId);
+  const visualisationAnnotations = getAnnotationsById(lBDatasetUmapURL);
 
   const updateAnnotations = useMutation(
     (
@@ -138,37 +140,54 @@ const Visualisation: React.FC<VisualisationProps> = ({ visualisationId }) => {
 
   return (
     <div style={{ position: "relative" }}>
-      <Image
-        src={`/${visualisationId}.png`}
-        alt=""
-        width={700}
-        height={500}
-        className={styles.visualisation}
+      <button
+        style={{
+          outline: "none",
+          border: "none",
+          background: "none",
+          cursor: "pointer",
+        }}
         onClick={(e) => {
-          const imageElement = document.getElementById(visualisationId);
+          console.log("clicked");
+          const imageElement = document.getElementById(lBDatasetUmapURL);
           if (imageElement) {
             const bounds = imageElement.getBoundingClientRect();
             setShowAnnotationEditor({
               isOpen: true,
-              x: Math.round(e.clientX - bounds.x) / bounds.width,
-              y: Math.round(e.clientY - bounds.y) / bounds.height,
+              x: Math.round(e.clientX - bounds.x) / 900,
+              y: Math.round(e.clientY - bounds.y) / 562,
             });
             setAnnotationTempValue("");
           }
         }}
-        id={visualisationId}
-      />
+      >
+        <Image
+          src={lBDatasetUmapURL}
+          width={900}
+          height={562}
+          style={{
+            objectFit: "contain",
+            width: "900px",
+            height: "100%",
+            cursor: "pointer",
+            position: "relative",
+          }}
+          alt='UMAP Image'
+          id={lBDatasetUmapURL}
+        />
+      </button>
       {showAnnotationEditor.isOpen ? (
         <div
           style={{
             position: "absolute",
-            left: showAnnotationEditor.x * 700,
-            top: showAnnotationEditor.y * 500,
+            left: showAnnotationEditor.x * 900,
+            top: showAnnotationEditor.y * 562,
             background: "var(--user-bg)",
             width: "180px",
             borderRadius: "6px",
             transformOrigin: "bottom left",
             opacity: 0.95,
+            zIndex: 10000000000,
           }}
         >
           <input
@@ -182,13 +201,13 @@ const Visualisation: React.FC<VisualisationProps> = ({ visualisationId }) => {
             }}
             value={annotationTempValue}
             onChange={(e) => setAnnotationTempValue(e.target.value)}
-            placeholder="Enter annotation..."
+            placeholder='Enter annotation...'
             autoFocus={true}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 const userBg =
                   document.documentElement.style.getPropertyValue("--user-bg");
-                updateAnnotations(visualisationId, {
+                updateAnnotations(lBDatasetUmapURL, {
                   comment: annotationTempValue,
                   x: showAnnotationEditor.x,
                   y: showAnnotationEditor.y,
@@ -210,8 +229,8 @@ const Visualisation: React.FC<VisualisationProps> = ({ visualisationId }) => {
                 padding: "8px 12px",
                 background: `var(--${annotation.colour}-400)`,
                 color: `var(--${annotation.colour}-100)`,
-                left: annotation.x * 700,
-                top: annotation.y * 500,
+                left: annotation.x * 900,
+                top: annotation.y * 562,
                 borderRadius: "0px 6px 6px 6px",
               }}
             >

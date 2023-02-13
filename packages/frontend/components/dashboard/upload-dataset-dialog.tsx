@@ -81,7 +81,7 @@ export const UploadDatasetDialog: React.FC<UploadDatasetDialogProps> = ({
       bodyForUpload.append("files", matrixFile, matrixFile.name);
 
       const response = await fetch(
-        `http://127.0.0.1:8787/upload?datasetName=${uploadDatasetForm.datasetName}&datasetCategory=${uploadDatasetForm.datasetCategory}`,
+        `${process.env.NEXT_PUBLIC_ANALYSIS_WORKER_URL}/upload?datasetName=${uploadDatasetForm.datasetName}&datasetCategory=${uploadDatasetForm.datasetCategory}`,
         {
           method: "POST",
           body: bodyForUpload,

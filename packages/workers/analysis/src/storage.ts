@@ -35,14 +35,18 @@ export class StorageDO {
 
 class AnalysisService {
   public async healthCheck() {
-    const response = await fetch("http://autocar-backend.fly.dev/");
+    const response = await fetch(
+      "https://lionfish-app-ofc6e.ondigitalocean.app/"
+    );
     const text = (await response.json<string[]>())[0];
 
     return decorateResponse(text, 200);
   }
 
   public async getDatasets() {
-    const response = await fetch("http://autocar-backend.fly.dev/datasets");
+    const response = await fetch(
+      "https://lionfish-app-ofc6e.ondigitalocean.app/datasets"
+    );
     const datasets = await response.json<DatasetCategory[]>();
 
     return decorateResponse(JSON.stringify(datasets), 200);
@@ -55,7 +59,7 @@ class AnalysisService {
       const datasetCategory = url.searchParams.get("datasetCategory");
       const formData = await request.formData();
       const response = await fetch(
-        `https://autocar-backend.fly.dev/upload-10X?dataset_name=${datasetName}&dataset_category=${datasetCategory}`,
+        `https://lionfish-app-ofc6e.ondigitalocean.app/upload-10X?dataset_name=${datasetName}&dataset_category=${datasetCategory}`,
         {
           method: "POST",
           body: formData,
@@ -87,7 +91,7 @@ class AnalysisService {
           );
         }
         const response = await fetch(
-          `http://autocar-backend.fly.dev/download-umap?dataset=${encodeURI(
+          `https://lionfish-app-ofc6e.ondigitalocean.app/download-umap?dataset=${encodeURI(
             datasetName || ""
           )}`
         );

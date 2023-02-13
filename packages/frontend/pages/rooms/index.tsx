@@ -160,7 +160,7 @@ export const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({
 
   const handleSubmit = React.useCallback(async () => {
     try {
-      await fetch(process.env.ROOM_WORKER_URL + "/room", {
+      await fetch(process.env.NEXT_PUBLIC_ROOM_WORKER_URL + "/room", {
         method: "POST",
         body: JSON.stringify({
           ...createRoomForm,

@@ -60,7 +60,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ roomId }) => {
   const [doReload, setDoReload] = React.useState(true);
   const getDatasets = React.useCallback(async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8787/datasets`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_ANALYSIS_WORKER_URL}/datasets`
+      );
       const datasetsFromResponse = await response.json<DatasetCategory[]>();
       setDatasets(datasetsFromResponse);
     } catch (e) {
@@ -182,7 +184,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ roomId }) => {
     updateLBLoadingDatasetUMAP(true);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8787/download-umap?datasetName=${lBSelectedDataset}`
+        `${process.env.NEXT_PUBLIC_ANALYSIS_WORKER_URL}/download-umap?datasetName=${lBSelectedDataset}`
       );
       const imageURLData = await response.json<{
         url: string;

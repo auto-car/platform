@@ -46,6 +46,11 @@ const DatasetMenuItem: React.FC<
 > = ({ name, createdAt, hasOutput, updatedAt, handleSelectDataset }) => {
   const datasetName = React.useMemo(() => name[0].split("/")[1], [name]);
 
+  const updatedToLocalTime = React.useMemo(
+    () => convertUTCDateToLocalDate(new Date(updatedAt[0])),
+    [updatedAt]
+  );
+
   return (
     <button
       style={{
@@ -69,7 +74,7 @@ const DatasetMenuItem: React.FC<
       <hgroup>
         <p style={{ fontWeight: 600, fontSize: "14px" }}>{datasetName}</p>
         <span style={{ color: "var(--violet-100-meta)" }}>
-          Updated {getTimeAgo(new Date(updatedAt[0]))}
+          Updated {getTimeAgo(updatedToLocalTime)}
         </span>
       </hgroup>
       <span>
@@ -77,4 +82,9 @@ const DatasetMenuItem: React.FC<
       </span>
     </button>
   );
+};
+
+const convertUTCDateToLocalDate = (date: Date) => {
+  var newDate = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+  return newDate;
 };
