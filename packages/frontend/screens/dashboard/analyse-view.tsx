@@ -1,66 +1,11 @@
 import React from "react";
-import dashboardStyles from "./dashboard-screen.module.css";
-import styles from "./analyse-view.module.css";
-import { UploadIcon } from "../../icons/upload-icon";
 import { useMutation, useStorage } from "../../liveblocks.config";
-import { LiveList, LiveObject } from "@liveblocks/client";
+import { LiveList } from "@liveblocks/client";
 import Image from "next/image";
-
-// export const AnalyseView = () => {
-//   const showGraph = (
-//     useStorage((root) => root.showGraph) as { showGraph: boolean }
-//   ).showGraph;
-
-//   const updateShowGraph = useMutation(({ storage }) => {
-//     const mutableShowGraph = storage.get("showGraph") as LiveObject<{
-//       showGraph: boolean;
-//     }>;
-//     if (mutableShowGraph) {
-//       mutableShowGraph.set("showGraph", true);
-//     }
-//   }, []);
-
-//   return (
-//     <div className={styles.mainBody}>
-//       <hgroup className={dashboardStyles.dashboardViewHGroup}>
-//         <h1 className={dashboardStyles.dashboardViewHeading}>Analyse</h1>
-//         <p className={dashboardStyles.dashboardViewDescription}>
-//           Analyse single or multiple datasets collaboratively.
-//         </p>
-//       </hgroup>
-//       <section className={styles.section}>
-//         <hgroup className={styles.sectionHGroup}>
-//           <h2 className={styles.sectionHeading}>Upload your data</h2>
-//           <p className={styles.sectionDescription}>
-//             To begin the analysis process, please upload your quality-controlled
-//             dataset file.
-//           </p>
-//         </hgroup>
-//         <button className={styles.uploadButton} onClick={updateShowGraph}>
-//           <UploadIcon width={24} height={24} className={styles.uploadIcon} />
-//           <p>Upload Data</p>
-//         </button>
-//       </section>
-//       {showGraph ? (
-//         <section className={styles.section}>
-//           <hgroup className={styles.sectionHGroup}>
-//             <h2 className={styles.sectionHeading}>Visualisation</h2>
-//             <p className={styles.sectionDescription}>
-//               To add an annotation, click on the visualisations below.
-//             </p>
-//           </hgroup>
-//           <div className={styles.visualisationRow}>
-//             {["mock-visualisation-1", "mock-visualisation-2"].map(
-//               (visualisationId, index) => (
-//                 <Visualisation visualisationId={visualisationId} key={index} />
-//               )
-//             )}
-//           </div>
-//         </section>
-//       ) : null}
-//     </div>
-//   );
-// };
+import { UserContext } from "../../context/user-context";
+import { UserAvatar } from "components/avatar/user-avatar";
+import { getTimeAgo } from "components/rooms/room-card";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 interface VisualisationProps {
   lBDatasetUmapURL: string;
@@ -76,10 +21,21 @@ export const Visualisation: React.FC<VisualisationProps> = ({
     y: 0,
   });
 
+  const { user } = React.useContext(UserContext);
+
   const annotations = useStorage((root) => root.annotations) as [
     {
       id: string;
-      annotations: [{ x: number; y: number; comment: string; colour: string }];
+      annotations: [
+        {
+          x: number;
+          y: number;
+          comment: string;
+          colour: string;
+          user: { name: string; picture: string };
+          commentedAt: string;
+        }
+      ];
     }
   ];
 
@@ -98,6 +54,45 @@ export const Visualisation: React.FC<VisualisationProps> = ({
 
   const visualisationAnnotations = getAnnotationsById(lBDatasetUmapURL);
 
+  const deleteAnnotation = useMutation(
+    ({ storage }, id: string, { x, y, comment }) => {
+      const mutableAnnotations = storage.get("annotations") as LiveList<{
+        id: string;
+        annotations: {
+          x: number;
+          y: number;
+          comment: string;
+          colour: string;
+          user: { picture: string; name: string };
+          commentedAt: string;
+        }[];
+      }>;
+
+      if (mutableAnnotations) {
+        const existingAnnotationsObj = getAnnotationsById(id);
+        if (existingAnnotationsObj) {
+          const oldEntry = existingAnnotationsObj;
+          // Clear old entry
+          mutableAnnotations.delete(mutableAnnotations.indexOf(oldEntry));
+          // Remove the annotation entry
+          const entryToKeep = {
+            ...oldEntry,
+            annotations: oldEntry.annotations.filter(
+              (annotation) =>
+                annotation.x !== x &&
+                annotation.y !== y &&
+                annotation.comment !== comment
+            ),
+          };
+
+          // Add to annotations state
+          mutableAnnotations.push(entryToKeep);
+        }
+      }
+    },
+    [annotations]
+  );
+
   const updateAnnotations = useMutation(
     (
       { storage },
@@ -107,7 +102,16 @@ export const Visualisation: React.FC<VisualisationProps> = ({
         x,
         y,
         colour,
-      }: { comment: string; x: number; y: number; colour: string }
+        user,
+        commentedAt,
+      }: {
+        comment: string;
+        x: number;
+        y: number;
+        colour: string;
+        user: { picture: string; name: string };
+        commentedAt: string;
+      }
     ) => {
       const mutableAnnotations = storage.get("annotations") as LiveList<{
         id: string;
@@ -116,6 +120,8 @@ export const Visualisation: React.FC<VisualisationProps> = ({
           y: number;
           comment: string;
           colour: string;
+          user: { picture: string; name: string };
+          commentedAt: string;
         }[];
       }>;
 
@@ -126,11 +132,21 @@ export const Visualisation: React.FC<VisualisationProps> = ({
           // Clear old entry
           mutableAnnotations.delete(mutableAnnotations.indexOf(oldEntry));
           // Add new annotation entry
-          oldEntry.annotations.push({ x, y, comment, colour });
+          oldEntry.annotations.push({
+            x,
+            y,
+            comment,
+            colour,
+            user,
+            commentedAt,
+          });
           // Add to annotations state
           mutableAnnotations.push(oldEntry);
         } else {
-          const newEntry = { annotations: [{ x, y, comment, colour }], id };
+          const newEntry = {
+            annotations: [{ x, y, comment, colour, user, commentedAt }],
+            id,
+          };
           mutableAnnotations.push(newEntry);
         }
       }
@@ -148,15 +164,18 @@ export const Visualisation: React.FC<VisualisationProps> = ({
           cursor: "pointer",
         }}
         onClick={(e) => {
-          console.log("clicked");
           const imageElement = document.getElementById(lBDatasetUmapURL);
           if (imageElement) {
             const bounds = imageElement.getBoundingClientRect();
-            setShowAnnotationEditor({
-              isOpen: true,
-              x: Math.round(e.clientX - bounds.x) / 900,
-              y: Math.round(e.clientY - bounds.y) / 562,
-            });
+            if (showAnnotationEditor.isOpen) {
+              setShowAnnotationEditor({ isOpen: false, x: 0, y: 0 });
+            } else {
+              setShowAnnotationEditor({
+                isOpen: true,
+                x: Math.round(e.clientX - bounds.x) / 900,
+                y: Math.round(e.clientY - bounds.y) / 562,
+              });
+            }
             setAnnotationTempValue("");
           }
         }}
@@ -171,6 +190,7 @@ export const Visualisation: React.FC<VisualisationProps> = ({
             height: "100%",
             cursor: "pointer",
             position: "relative",
+            borderRadius: "2px",
           }}
           alt='UMAP Image'
           id={lBDatasetUmapURL}
@@ -184,20 +204,26 @@ export const Visualisation: React.FC<VisualisationProps> = ({
             top: showAnnotationEditor.y * 562,
             background: "var(--user-bg)",
             width: "180px",
-            borderRadius: "6px",
+            borderRadius: "0px 6px 6px 6px",
             transformOrigin: "bottom left",
-            opacity: 0.95,
             zIndex: 10000000000,
+            padding: "8px 12px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "8px",
           }}
         >
+          <UserAvatar name={user.name} src={user.picture} size='tiny' />
           <input
             style={{
               background: "none",
               border: "none",
               outline: "none",
-              padding: "8px 12px",
               fontSize: "12px",
               color: "var(--user-text)",
+              maxHeight: "12px",
+              padding: 0,
             }}
             value={annotationTempValue}
             onChange={(e) => setAnnotationTempValue(e.target.value)}
@@ -212,9 +238,13 @@ export const Visualisation: React.FC<VisualisationProps> = ({
                   x: showAnnotationEditor.x,
                   y: showAnnotationEditor.y,
                   colour: userBg.split("--")[1].split("-")[0],
+                  user,
+                  commentedAt: String(Date.now()),
                 });
                 setShowAnnotationEditor({ isOpen: false, x: 0, y: 0 });
                 setAnnotationTempValue("");
+              } else if (e.key === "Escape") {
+                setShowAnnotationEditor({ isOpen: false, x: 0, y: 0 });
               }
             }}
           />
@@ -222,22 +252,147 @@ export const Visualisation: React.FC<VisualisationProps> = ({
       ) : null}
       {visualisationAnnotations
         ? visualisationAnnotations.annotations.map((annotation, index) => (
-            <div
+            <DisplayAnnotation
               key={index}
-              style={{
-                position: "absolute",
-                padding: "8px 12px",
-                background: `var(--${annotation.colour}-400)`,
-                color: `var(--${annotation.colour}-100)`,
-                left: annotation.x * 900,
-                top: annotation.y * 562,
-                borderRadius: "0px 6px 6px 6px",
-              }}
-            >
-              <p style={{ fontSize: 12 }}>{annotation.comment}</p>
-            </div>
+              annotation={annotation}
+              id={lBDatasetUmapURL}
+              deleteAnnotation={deleteAnnotation}
+            />
           ))
         : null}
+    </div>
+  );
+};
+
+interface DisplayAnnotationProps {
+  annotation: {
+    x: number;
+    y: number;
+    comment: string;
+    colour: string;
+    user: { name: string; picture: string };
+    commentedAt: string;
+  };
+  deleteAnnotation: (args_0: string, args_1: any) => void;
+  id: string;
+}
+
+const DisplayAnnotation: React.FC<DisplayAnnotationProps> = ({
+  annotation,
+  deleteAnnotation,
+  id,
+}) => {
+  const [showDetailed, setShowDetailed] = React.useState(false);
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        background: `var(--${annotation.colour}-400)`,
+        left: annotation.x * 900,
+        top: annotation.y * 562,
+        borderRadius: "0px 6px 6px 6px",
+        padding: "8px 12px",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: showDetailed ? "flex-start" : "center",
+        gap: "8px",
+      }}
+      onPointerOver={() => setShowDetailed(true)}
+      onPointerLeave={() => setShowDetailed(false)}
+    >
+      <UserAvatar
+        name={annotation.user.name}
+        src={annotation.user.picture}
+        size='tiny'
+      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "4px",
+        }}
+      >
+        {showDetailed ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "4px",
+              fontWeight: 500,
+            }}
+          >
+            <p
+              style={{
+                fontSize: "10px",
+                color: `var(--${annotation.colour}-200)`,
+              }}
+            >
+              {annotation.user.name}
+            </p>
+            <span
+              style={{
+                opacity: 0.75,
+                color: `var(--${annotation.colour}-200)`,
+                fontSize: "8px",
+              }}
+            >
+              Added {getTimeAgo(new Date(parseInt(annotation.commentedAt)))}
+            </span>
+          </div>
+        ) : null}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <p
+            style={{
+              fontSize: 12,
+              margin: 0,
+              lineHeight: 1,
+              color: `var(--${annotation.colour}-100)`,
+              fontWeight: 400,
+            }}
+          >
+            {annotation.comment}
+          </p>
+        </div>
+        {showDetailed ? (
+          <button
+            style={{
+              position: "absolute",
+              top: "-8px",
+              right: "-8px",
+              width: "20px",
+              height: "20px",
+              cursor: "pointer",
+              borderRadius: "50%",
+              background: "var(--pink-300)",
+              border: "none",
+              outline: "none",
+              color: "var(--pink-100)",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClick={() => {
+              deleteAnnotation(id, { ...annotation });
+            }}
+          >
+            <DeleteIcon
+              style={{
+                width: "12px",
+                height: "12px",
+                cursor: "pointer",
+              }}
+            />
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 };

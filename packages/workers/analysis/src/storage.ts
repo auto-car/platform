@@ -21,6 +21,9 @@ export class StorageDO {
         );
       case "/datasets":
         return this.analysisService.getDatasets();
+      case "/admin":
+        await this.state.storage.deleteAll();
+        return decorateResponse("The deed is done.", 200);
       case "/upload":
         return this.analysisService.uploadDataset(request);
       case "/health-check":

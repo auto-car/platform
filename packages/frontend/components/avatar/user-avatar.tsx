@@ -4,7 +4,7 @@ import React from "react";
 
 interface UserAvatarProps {
   name: string;
-  size?: "normal" | "small";
+  size?: "normal" | "small" | "tiny";
   isGrouped?: boolean;
   src?: string | null;
 }
@@ -14,7 +14,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   isGrouped = false,
   src,
 }) => {
-  const width = size === "normal" ? 36 : 28;
+  const width = size === "normal" ? 36 : size === "small" ? 28 : 24;
   return (
     <Image
       alt='User'

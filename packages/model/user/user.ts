@@ -1,4 +1,4 @@
-import { Room } from "rooms/room";
+import { Room } from "../rooms/room";
 import { Identifiable } from "../traits/traits";
 
 export interface User extends Identifiable {

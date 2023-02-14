@@ -1,4 +1,4 @@
-import { User } from "user/user";
+import { User } from "../user/user";
 import { Identifiable } from "../traits/traits";
 import { Owner } from "./owner";
 import { RoomContent } from "./room-content";

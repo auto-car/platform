@@ -285,6 +285,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ roomId }) => {
           }}
           onInit={(ref) => setTransformRef(ref)}
           centerZoomedOut={false}
+          doubleClick={{ disabled: true }}
         >
           <TransformComponent wrapperStyle={{ position: "relative" }}>
             <div

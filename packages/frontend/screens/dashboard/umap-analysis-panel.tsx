@@ -59,18 +59,6 @@ export const UMAPAnalysisPanel: React.FC<UMAPAnalysisPanelProps> = ({
               expectedTime={5}
             />
           ) : lBDatasetUmapURL !== "" ? (
-            // <Image
-            //   src={lBDatasetUmapURL}
-            //   width={900}
-            //   height={562.5}
-            //   style={{
-            //     objectFit: "contain",
-            //     width: "900px",
-            //     height: "100%",
-            //     pointerEvents: "none",
-            //   }}
-            //   alt='UMAP Image'
-            // />
             <Visualisation lBDatasetUmapURL={lBDatasetUmapURL} />
           ) : (
             <>Something went wrong :{"("}</>
