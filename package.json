@@ -13,6 +13,7 @@
     "build:clean": "rm -rf packages/**/dist/**",
     "frontend:dev-remix": "yarn workspace @platform/remix-frontend dev:remix",
     "frontend:dev": "yarn workspace @platform/remix-frontend dev",
+    "frontend:build": "yarn build && yarn workspace @platform/remix-frontend build",
     "backend:dev": "cd packages/backend && ./run-backend.sh",
     "user-worker:dev": "yarn workspace @platform/user-worker dev",
     "user-worker:publish": "yarn workspace @platform/user-worker publish",
