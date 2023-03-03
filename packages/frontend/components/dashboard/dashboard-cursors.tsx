@@ -11,25 +11,26 @@ export const DashboardCursors: React.FC<DashboardCursorsProps> = ({
   transformRef,
 }) => {
   const others = useOthers();
-  // If a cursor is on screen (not null), render
   return (
     <>
       {others.map(({ connectionId, presence }) => {
-        return presence.cursor ? (
-          <Cursor
-            userColour={presence.userColour as string}
-            x={
-              (presence.cursor as { x: number; y: number })["x"] +
-              (transformRef?.state.positionX || 0)
-            }
-            user={presence.user as string}
-            y={
-              (presence.cursor as { x: number; y: number })["y"] +
-              (transformRef?.state.positionY || 0)
-            }
-            key={connectionId}
-          />
-        ) : null;
+        if (presence) {
+          const { cursor, userColour, user } = presence as {
+            cursor: { x: number; y: number };
+            userColour: string;
+            user: string;
+          };
+          return (
+            <Cursor
+              userColour={userColour}
+              x={cursor.x + (transformRef?.state.positionX || 0)}
+              user={user}
+              y={cursor.y + (transformRef?.state.positionY || 0)}
+              key={connectionId}
+            />
+          );
+        }
+        return null;
       })}
     </>
   );

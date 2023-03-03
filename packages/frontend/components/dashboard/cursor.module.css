@@ -1,0 +1,19 @@
+.cursor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 120ms linear;
+}
+
+.cursorLozenge {
+  border-radius: 24px;
+  padding: 8px 12px;
+}
+
+.lozengeText {
+  font-weight: 500;
+}

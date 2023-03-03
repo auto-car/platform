@@ -1,6 +1,6 @@
-import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import React from "react";
+import styles from "./user-avatar.module.css";
 
 interface UserAvatarProps {
   name: string;
@@ -21,11 +21,9 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
       src={src || "https://source.unsplash.com/random"}
       width={width}
       height={width}
+      className={styles.avatar}
       style={{
-        borderRadius: "50%",
-        cursor: "pointer",
         marginLeft: isGrouped ? -12 : 0,
-        pointerEvents: "none",
         boxShadow: size === "small" ? "0px 0px 4px black" : "",
       }}
     />

@@ -21,23 +21,7 @@ export const UploadDatasetButton = ({
         datasetCategories={datasetCategories}
         triggerReload={triggerReload}
       />
-      <button
-        style={{
-          color: "var(--violet-100)",
-          padding: "12px",
-          background: "var(--violet-500)",
-          border: "none",
-          outline: "none",
-          borderRadius: "4px",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: "8px",
-          cursor: "pointer",
-          marginTop: "12px",
-        }}
-        onClick={uploadDisclosure.onOpen}
-      >
+      <button className={styles.uploadButton} onClick={uploadDisclosure.onOpen}>
         <UploadIcon width={20} height={20} className={styles.shareIcon} />
         <p style={{ fontSize: "12px", fontWeight: 500 }}>Upload New Dataset</p>
       </button>

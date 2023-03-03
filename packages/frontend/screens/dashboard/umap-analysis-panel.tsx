@@ -1,7 +1,6 @@
 import React from "react";
-import Image from "next/image";
 import { LoadingDialog } from "../../components/dashboard/loading-dialog";
-import { Visualisation } from "./analyse-view";
+import { Visualisation } from "./visualisation";
 
 interface UMAPAnalysisPanelProps {
   lBSelectedDataset: string | null;

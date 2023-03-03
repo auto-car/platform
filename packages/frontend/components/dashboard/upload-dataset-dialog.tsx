@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./dashboard-screen.module.css";
+import dialogStyles from "./upload-dataset-dialog.module.css";
 import {
   Modal,
   ModalBody,
@@ -31,6 +32,7 @@ export interface UploadDatasetFormProps {
     matrix: File | null;
   };
 }
+
 export const UploadDatasetDialog: React.FC<UploadDatasetDialogProps> = ({
   onClose,
   onOpen,
@@ -112,23 +114,13 @@ export const UploadDatasetDialog: React.FC<UploadDatasetDialogProps> = ({
       ) : null}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent
-          style={{
-            background: "var(--violet-400)",
-            color: "var(--violet-200)",
-            padding: "32px 16px",
-            width: "560px",
-          }}
-          maxWidth='unset'
-        >
+        <ModalContent className={dialogStyles.modalContent} maxWidth='unset'>
           <ModalHeader>
             <h3>Upload a new dataset</h3>
           </ModalHeader>
-          <ModalBody
-            style={{ display: "flex", flexDirection: "column", gap: "16px" }}
-          >
+          <ModalBody className={dialogStyles.modalBody}>
             <FormSection>
-              <p style={{ fontSize: "14px" }}>Dataset Category</p>
+              <p className={dialogStyles.formInputTitle}>Dataset Category</p>
               <Creatable
                 unstyled
                 options={datasetCategories}
@@ -251,19 +243,9 @@ export const UploadDatasetDialog: React.FC<UploadDatasetDialogProps> = ({
               />
             </FormSection>
             <FormSection>
-              <p style={{ fontSize: "14px" }}>Dataset Name</p>
+              <p className={dialogStyles.formInputTitle}>Dataset Name</p>
               <input
-                style={{
-                  padding: "16px 12px",
-                  background: "var(--violet-500)",
-                  border: "none",
-                  outline: "none",
-                  fontSize: "12px",
-                  color: "var(--violet-100)",
-                  width: "calc(100% - 24px)",
-                  borderRadius: "4px",
-                }}
-                className={styles.textInput}
+                className={dialogStyles.formTextInput}
                 value={uploadDatasetForm.datasetName}
                 onChange={(e) =>
                   handleFormChange("datasetName", e.target.value)
@@ -272,17 +254,8 @@ export const UploadDatasetDialog: React.FC<UploadDatasetDialogProps> = ({
               />
             </FormSection>
             <FormSection>
-              <p style={{ fontSize: "14px" }}>Files</p>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  width: "100%",
-                  flexWrap: "wrap",
-                  gap: "16px",
-                }}
-              >
+              <p className={dialogStyles.formInputTitle}>Files</p>
+              <div className={dialogStyles.formFilesInputContainer}>
                 <FileUploadInput
                   handleFormChange={handleFormChange}
                   uploadDatasetForm={uploadDatasetForm}
@@ -301,37 +274,15 @@ export const UploadDatasetDialog: React.FC<UploadDatasetDialogProps> = ({
               </div>
             </FormSection>
           </ModalBody>
-          <ModalFooter
-            style={{ justifyContent: "space-between", paddingTop: "36px" }}
-          >
+          <ModalFooter className={dialogStyles.modalFooter}>
             <button
-              style={{
-                border: "none",
-                background: "var(--violet-500)",
-                outline: "none",
-                padding: "12px 16px",
-                borderRadius: "4px",
-                color: "var(--violet-200)",
-                fontWeight: 500,
-                cursor: "pointer",
-                fontSize: "12px",
-              }}
+              className={dialogStyles.modalCancelButton}
               onClick={onClose}
             >
               Cancel
             </button>
             <button
-              style={{
-                border: "none",
-                background: "var(--violet-300)",
-                outline: "none",
-                padding: "12px 16px",
-                borderRadius: "4px",
-                color: "var(--violet-100)",
-                fontWeight: 500,
-                cursor: "pointer",
-                fontSize: "12px",
-              }}
+              className={dialogStyles.modalSubmitButton}
               onClick={handleSubmit}
             >
               Submit

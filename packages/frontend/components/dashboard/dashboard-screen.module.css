@@ -1,257 +1,101 @@
-.horizontalLines {
-  display: flex;
-  flex-direction: column;
-  min-width: 100vw;
-  min-height: 100vh;
-  overflow: hidden;
-  gap: 200px;
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-
-.verticalLines {
-  display: flex;
-  flex-direction: row;
-  min-width: 100vw;
-  min-height: 100vh;
-  overflow: hidden;
-  gap: 200px;
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-
-.dashboard {
-  width: 100vw;
-  height: 100vh;
-  background: var(--violet-500);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-}
-
-.dashboardContainer {
-  width: calc(100% - 36px);
-  height: calc(100% - 36px);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-}
-
-.dashboardMenuNarrow {
-  width: 100px;
-  background: var(--violet-400);
-  border-radius: 12px;
-  padding: 44px 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: calc(100% - 88px);
-  position: relative;
-  transition: 2s linear;
-}
-
-.expandButton {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--violet-200);
-  width: 36px;
-  position: absolute;
-  top: 120px;
-  right: -18px;
-  height: 36px;
-  cursor: pointer;
-  border-radius: 50%;
-  outline: none;
-  border: none;
-}
-
-.expandButton:hover {
-  scale: 1.02;
-}
-
-.expandButton:active {
-  scale: 0.98;
-}
-
-.expandIcon,
-.expandIconFlipped {
-  fill: var(--violet-500);
-}
-
-.expandIconFlipped {
-  transform: scaleX(-1);
-  transition: 0.4s;
-}
-
-.dashboardMenu:hover,
-.dashboardMenuNarrow:hover {
-  border-right: 4px solid var(--violet-300);
-  transition: 0.3s;
-}
-
-.dashboardMenu {
-  position: relative;
-  width: 480px;
-  background: var(--violet-400);
-  border-radius: 12px;
-  padding: 44px 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: calc(100% - 88px);
-  transition: 2s linear;
-}
-
-.dashboardView {
-  width: calc(100% - 120px);
-  height: calc(100% - 120px);
-  border-radius: 12px;
-  background: var(--violet-400);
-  padding: 60px;
-}
-
-.dashboardViewHGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.dashboardViewHeading {
-  color: var(--violet-100);
-  font-size: 28px;
-}
-
-.dashboardViewDescription {
-  color: var(--violet-100);
-  font-size: 14px;
-}
-
-.menuLogoHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--violet-100);
-  text-align: center;
-  gap: 12px;
-}
-
-.menuLogoHeaderHeadings {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.menuLogoSubtitle {
-  font-weight: 300;
-  font-size: 12px;
-}
-
-.divider {
-  background: var(--violet-100-placeholder);
-  width: calc(100% - 48px);
-  height: 1px;
-  border-radius: 12px;
-  margin-top: 24px;
-}
-
-.menuList {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 64px;
-  width: 100%;
-  gap: 16px;
-}
-
-.menuItem,
-.menuItemSelected {
-  background: var(--blue-500);
-  color: var(--violet-100);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  width: calc(100% - 48px);
-  gap: 12px;
-  padding: 16px 24px;
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.menuItemSelected {
-  opacity: 1;
-}
-
-.menuItem:hover,
-.menuItemSelected:hover {
-  scale: 1.01;
-}
-
-.menuItem:active,
-.menuItemSelected:active {
-  scale: 0.99;
-}
-
-.menuItemNarrow,
-.menuItemSelectedNarrow {
-  background: var(--blue-500);
-  color: var(--violet-100);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  gap: 12px;
-  padding: 12px;
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.menuItemSelectedNarrow {
-  opacity: 1;
-}
-
-.menuItemNarrow:hover,
-.menuItemSelectedNarrow:hover {
-  scale: 1.01;
-}
-
-.menuItemNarrow:active,
-.menuItemSelectedNarrow:active {
-  scale: 0.99;
-}
-
-.menuItemTitle {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.menuItemIcon {
-  fill: var(--violet-100);
-}
-
-.menuItemInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 8px;
-}
-
 .shareIcon {
   fill: var(--violet-100);
 }
 
+.fileUploadFileText {
+  background: var(--violet-300);
+  color: var(--violet-200);
+  font-size: 12px;
+}
+
+.textInput {
+  padding: 16px 12px;
+  background: var(--violet-500);
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: var(--violet-100-placeholder);
+  border-radius: 4px;
+  min-width: calc(100% - 28px);
+  max-width: calc(100% - 28px);
+}
+
 .textInput::placeholder {
   color: var(--violet-100-placeholder);
+}
+
+.textInputLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  gap: 4px;
+  color: var(--violet-100-meta);
+}
+
+.textInputContainer {
+  min-width: calc(50% - 8px);
+  max-width: calc(50% - 8px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menuDatasetCategory {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menuDatasetCategoryName {
+  font-weight: 600;
+}
+
+.menuDatasetCategoryItems {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
+
+.datasetCategoryItem {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 12px 12px;
+  color: var(--violet-100);
+  background: var(--violet-300);
+  border-radius: 4px;
+  text-align: left;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.datasetCategoryItemName {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.updatedAtText {
+  color: var(--violet-100-meta);
+}
+
+.uploadButton {
+  color: var(--violet-100);
+  padding: 12px;
+  background: var(--violet-500);
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 12px;
 }
