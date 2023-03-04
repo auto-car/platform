@@ -3,7 +3,6 @@ module.exports = {
   devServerBroadcastDelay: 1000,
   ignoredRouteFiles: ["**/.*"],
   server: "./server.js",
-  serverBuildPath: "functions/[[path]].js",
   serverConditions: ["worker"],
   serverDependenciesToBundle: "all",
   serverMainFields: ["browser", "module", "main"],
@@ -12,5 +11,9 @@ module.exports = {
   serverPlatform: "neutral",
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
+  // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
+  future: {
+    unstable_cssModules: true,
+  },
 };

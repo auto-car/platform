@@ -1,0 +1,52 @@
+import React from "react";
+import { type IconProps } from "./types";
+
+export const LogoIcon: React.FC<IconProps> = ({ width, height, className }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox='0 0 105 105'
+      className={className}
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <ellipse cx='16.875' cy='21.2504' rx='4.375' ry='5' fill='inherit' />
+      <ellipse cx='29.3749' cy='11.2501' rx='4.375' ry='5' fill='inherit' />
+      <ellipse cx='45' cy='5.625' rx='6.25' ry='5.625' fill='inherit' />
+      <circle cx='8.12488' cy='35.6255' r='4.375' fill='inherit' />
+      <circle cx='5' cy='52.4995' r='5' fill='inherit' />
+      <circle cx='8.12512' cy='69.3746' r='6.875' fill='inherit' />
+      <circle cx='17.5' cy='83.7501' r='7.5' fill='inherit' />
+      <ellipse cx='29.3749' cy='93.7496' rx='4.375' ry='5' fill='inherit' />
+      <ellipse cx='45' cy='99.3751' rx='6.25' ry='5.625' fill='inherit' />
+      <circle cx='98.1251' cy='69.3752' r='4.375' fill='inherit' />
+      <ellipse cx='100.625' cy='52.4998' rx='4.375' ry='3.75' fill='inherit' />
+      <circle cx='98.1251' cy='35.6255' r='4.375' fill='inherit' />
+      <ellipse cx='90' cy='21.875' rx='3.75' ry='4.375' fill='inherit' />
+      <circle cx='76.8751' cy='11.8747' r='4.375' fill='inherit' />
+      <circle cx='61.875' cy='5.62531' r='4.375' fill='inherit' />
+      <circle cx='53.1251' cy='21.875' r='4.375' fill='inherit' />
+      <circle cx='38.125' cy='25.6245' r='4.375' fill='inherit' />
+      <ellipse cx='25.6251' cy='37.5005' rx='5.625' ry='6.25' fill='inherit' />
+      <circle cx='21.2501' cy='52.4999' r='6.25' fill='inherit' />
+      <ellipse cx='25.625' cy='67.5' rx='6.875' ry='6.25' fill='inherit' />
+      <circle cx='38.125' cy='80.6251' r='4.375' fill='inherit' />
+      <circle cx='53.1251' cy='83.125' r='4.375' fill='inherit' />
+      <ellipse cx='53.1251' cy='52.4998' rx='4.375' ry='3.75' fill='inherit' />
+      <ellipse cx='38.125' cy='52.4998' rx='4.375' ry='3.75' fill='inherit' />
+      <circle cx='45' cy='37.5005' r='6.25' fill='inherit' />
+      <circle cx='61.8749' cy='39.3747' r='5.625' fill='inherit' />
+      <circle cx='68.125' cy='25.6249' r='5.625' fill='inherit' />
+      <ellipse cx='80' cy='35.6252' rx='6.25' ry='5.625' fill='inherit' />
+      <ellipse cx='84.375' cy='52.4999' rx='5.625' ry='6.25' fill='inherit' />
+      <ellipse cx='68.125' cy='52.4999' rx='5.625' ry='6.25' fill='inherit' />
+      <circle cx='61.875' cy='65.625' r='4.375' fill='inherit' />
+      <circle cx='44.375' cy='65.625' r='4.375' fill='inherit' />
+      <circle cx='68.125' cy='79.3745' r='5.625' fill='inherit' />
+      <circle cx='80' cy='67.5' r='6.25' fill='inherit' />
+      <ellipse cx='90' cy='83.125' rx='3.75' ry='4.375' fill='inherit' />
+      <circle cx='76.8751' cy='93.1246' r='4.375' fill='inherit' />
+      <circle cx='61.875' cy='99.3754' r='4.375' fill='inherit' />
+    </svg>
+  );
+};

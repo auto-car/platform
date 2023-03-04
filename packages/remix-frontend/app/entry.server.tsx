@@ -14,8 +14,8 @@ export default async function handleRequest(
     {
       signal: request.signal,
       onError(error: unknown) {
-        responseStatusCode = 500;
         console.error(error);
+        responseStatusCode = 500;
       },
     }
   );

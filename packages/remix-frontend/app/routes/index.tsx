@@ -1,44 +1,64 @@
-import { User } from "@platform/model";
+import { Auth0Icon } from "app/icons/auth0-icon";
+import { LogoIcon } from "app/icons/logo";
+import homeStyles from "../styles/login.module.css";
+
+import loginUmapImage from "../images/home-umap.png";
+import loginQcImage from "../images/home-qc.png";
+import { CursorIcon } from "app/icons/cursor";
+import { Form } from "@remix-run/react";
 
 export default function Index() {
-  const user: User = {
-    email: "email",
-    id: "id",
-    name: "name",
-    nickname: "nickname",
-    picture: "picture",
-    rooms: [],
-  };
-
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <div>Random user obj {JSON.stringify(user)}</div>
-      <ul>
-        <li>
-          <a
-            target='_blank'
-            href='https://remix.run/tutorials/blog'
-            rel='noreferrer'
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target='_blank'
-            href='https://remix.run/tutorials/jokes'
-            rel='noreferrer'
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target='_blank' href='https://remix.run/docs' rel='noreferrer'>
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+    <main className={homeStyles.loginView}>
+      <div className={homeStyles.logoAndHgroup}>
+        <LogoIcon width={48} height={48} className={homeStyles.logo} />
+        <hgroup className={homeStyles.hgroup}>
+          <h1 className={homeStyles.heading}>AutoCAR</h1>
+          <p className={homeStyles.subheading}>
+            CAR T-Cell Research with real-time collaboration.
+          </p>
+        </hgroup>
+      </div>
+      <Form action='/auth0' method='post'>
+        <button className={homeStyles.authButton}>
+          <Auth0Icon width={24} height={24} className={homeStyles.authIcon} />
+          <p>Login with Auth0</p>
+        </button>
+      </Form>
+      <div className={homeStyles.loginUmapImageWrapper}>
+        <img
+          className={homeStyles.loginUmapImage}
+          src={loginUmapImage}
+          alt='Umap'
+        />
+        <div className={homeStyles.alice}>
+          <CursorIcon
+            width={24}
+            height={24}
+            className={homeStyles.aliceCursor}
+          />
+          <p className={homeStyles.aliceCursorLabel}>Alice</p>
+        </div>
+        <div className={homeStyles.bob}>
+          <CursorIcon width={24} height={24} className={homeStyles.bobCursor} />
+          <p className={homeStyles.bobCursorLabel}>Bob</p>
+        </div>
+      </div>
+      <div className={homeStyles.loginQcImageWrapper}>
+        <img
+          className={homeStyles.loginQcImage}
+          src={loginQcImage}
+          alt='Umap'
+        />
+        <div className={homeStyles.alex}>
+          <CursorIcon
+            width={24}
+            height={24}
+            className={homeStyles.alexCursor}
+          />
+          <p className={homeStyles.alexCursorLabel}>Alex</p>
+        </div>
+      </div>
+    </main>
   );
 }

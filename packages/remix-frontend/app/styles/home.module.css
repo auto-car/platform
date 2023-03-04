@@ -1,0 +1,134 @@
+.homeView {
+  background: linear-gradient(180deg, #efd7ff 0%, #f5e7ff 100%);
+  width: 100vw;
+  height: 100vh;
+}
+
+.menuPanel {
+  background: #11001c;
+  width: 280px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menuPanelContent {
+  padding: 36px 16px;
+  height: calc(100% - 32px);
+  width: calc(100% - 72px);
+  display: flex;
+  flex-direction: column;
+  gap: 54px;
+}
+
+.menuPanelLogoHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.menuPanelLogoHeaderTitle {
+  font-family: Barlow;
+  font-weight: 500;
+  color: #b94dae;
+  font-size: 10px;
+}
+
+.menuPanelLogo {
+  fill: #b94dae;
+}
+
+.menuPanelSections {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 36px;
+}
+
+.menuPanelSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.sectionIcon {
+  fill: #b94dae;
+}
+
+.sectionTitle {
+  color: #b94dae;
+  font-family: Rubik;
+  font-weight: 600;
+  font-size: 10px;
+}
+
+.sectionItems {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sectionItem,
+.sectionItemSelected,
+.sectionAddButton {
+  padding: 8px 16px;
+  transition: 0.1s;
+  font-weight: 400;
+  color: #eed7ff;
+  opacity: 0.5;
+  font-size: 12px;
+  font-family: Barlow;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  border-radius: 2px;
+  display: flex;
+}
+
+.sectionItem:hover,
+.sectionItemSelected:hover {
+  background: #4f0147;
+  transform: scale(1);
+}
+
+.sectionItem:active,
+.sectionItemSelected:active {
+  background: #4f0147;
+  transform: scale(0.99);
+}
+
+.sectionAddButton:hover {
+  background: #23003a;
+  transform: scale(1);
+}
+
+.sectionAddButton:active {
+  background: #23003a;
+  transform: scale(0.99);
+}
+
+.sectionAddButton,
+.sectionItemSelected {
+  font-weight: 600;
+  opacity: 1;
+}
+
+.sectionAddButton {
+  color: #f190e7;
+  margin-top: 12px;
+}
+
+.sectionItemSelected {
+  background: #4f0147;
+}
