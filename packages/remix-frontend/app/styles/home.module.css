@@ -22,7 +22,7 @@
   width: calc(100% - 72px);
   display: flex;
   flex-direction: column;
-  gap: 54px;
+  gap: 32px;
 }
 
 .menuPanelLogoHeader {
@@ -137,11 +137,20 @@
 }
 
 .homePanel {
-  padding: 64px 40px;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: calc(100% - (280px + 80px));
+  height: calc(100% - 160px);
+  overflow-y: auto;
 }
 
 .homePanelHeading {
   font-size: 16px;
+  color: #11001c;
+  font-weight: 500;
+  font-family: Rubik;
 }
 
 .homePanelHgroup {
@@ -162,4 +171,159 @@
   opacity: 0.6;
   font-family: Barlow;
   font-weight: 400;
+  font-size: 12px;
+}
+
+.homePanelContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contentView {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.contentHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.addContentButton {
+  outline: none;
+  border: none;
+  background: #11001c;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  fill: #eed7ff;
+  color: #eed7ff;
+  align-self: flex-start;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Barlow;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.contentSubheading {
+  color: #11001c;
+  font-weight: 600;
+  font-family: Barlow;
+  font-size: 16px;
+}
+
+.contentFilterRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.filterRowSearchAndSort {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  width: min(720px, 50%);
+}
+
+.filterSearchbar {
+  background: #fbf5ff;
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.filterSearchbarIcon {
+  fill: #11001c;
+}
+
+.filterSearchbarInput {
+  background: none;
+  width: 100%;
+  color: #11001c;
+  border: none;
+  outline: none;
+  font-family: Rubik;
+  font-size: 14px;
+}
+
+.filterSearchbarInput::placeholder {
+  color: #11001c40;
+}
+
+.filterSort {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+
+.filterSortText {
+  font-family: Rubik;
+  font-size: 12px;
+  font-weight: 400;
+  color: #11001c;
+}
+
+.filterSortDropdown {
+  background: none;
+  border: none;
+  outline: none;
+  font-family: Rubik;
+  font-weight: 500;
+  font-size: 12px;
+  color: #11001c;
+  cursor: pointer;
+}
+
+.filterRowViewToggles {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.filterRowViewToggle,
+.filterRowViewToggleSelected {
+  padding: 8px 12px;
+  background: none;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  color: #11001c;
+  fill: #11001c;
+  font-size: 12px;
+}
+
+.filterRowViewToggleSelected {
+  color: #efd8ff;
+  fill: #efd8ff;
+  background: #11001c;
+}
+
+.filterRowViewToggle:hover {
+  transform: scale(1);
+  background: #11001c;
+  color: #efd8ff;
+  fill: #efd8ff;
+}
+
+.filterRowViewToggle:active {
+  transform: scale(0.99);
 }

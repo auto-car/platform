@@ -1,16 +1,20 @@
 import React from "react";
 import { TeamsIcon } from "app/icons/teams-icon";
 import homeStyles from "../styles/home.module.css";
+import { type LabsCategory, type Team } from "app/utils/constants";
+import { LabsIcon } from "app/icons/labs-icon";
 
 export interface MenuPanelSectionProps {
   type: "teams" | "labs";
-  items: MenuItemProps[];
-  selected: MenuItemProps;
-  handleSelectItem: (item: MenuItemProps) => void;
+  items: Team[] | LabsCategory[];
+  selected: Team | LabsCategory;
+  handleSelectItem: (item: Team | LabsCategory) => void;
 }
+
 export interface MenuItemProps {
   title: string;
 }
+
 export const MenuPanelSection: React.FC<MenuPanelSectionProps> = ({
   items,
   type,
@@ -27,10 +31,20 @@ export const MenuPanelSection: React.FC<MenuPanelSectionProps> = ({
     [type]
   );
 
+  const sectionIcon = React.useMemo(
+    () =>
+      type === "teams" ? (
+        <TeamsIcon width={16} height={16} className={homeStyles.sectionIcon} />
+      ) : (
+        <LabsIcon width={16} height={16} className={homeStyles.sectionIcon} />
+      ),
+    [type]
+  );
+
   return (
     <div className={homeStyles.menuPanelSection}>
       <div className={homeStyles.sectionHeader}>
-        <TeamsIcon width={16} height={16} className={homeStyles.sectionIcon} />
+        {sectionIcon}
         <h5 className={homeStyles.sectionTitle}>{sectionTitle}</h5>
       </div>
       <div className={homeStyles.sectionItems}>
@@ -38,13 +52,13 @@ export const MenuPanelSection: React.FC<MenuPanelSectionProps> = ({
           <button
             key={key}
             className={
-              item.title === selected.title
+              item.name === selected.name
                 ? homeStyles.sectionItemSelected
                 : homeStyles.sectionItem
             }
-            onClick={() => handleSelectItem(item)}
+            onClick={() => handleSelectItem({ ...item })}
           >
-            {item.title}
+            {item.name}
           </button>
         ))}
         <button className={homeStyles.sectionAddButton}>

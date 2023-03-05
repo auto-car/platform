@@ -15,7 +15,7 @@ const emptyUser: User = {
   name: "",
   nickname: "",
   picture: "",
-  rooms: [],
+  labs: [],
 };
 
 export const initUser = emptyUser;

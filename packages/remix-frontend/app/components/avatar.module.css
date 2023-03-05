@@ -1,0 +1,59 @@
+.avatarSmall,
+.avatar {
+  border-radius: 50%;
+}
+
+.avatarSmall {
+  width: 24px;
+  height: 24px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+}
+
+.avatarGroupContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatarGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.avatarGroupItem {
+  margin-right: -14px;
+  position: relative;
+}
+
+.avatarGroupItem:last-child {
+  margin-right: 0px;
+}
+
+.avatarDim {
+  filter: brightness(60%);
+}
+
+.avatarGroupNumber {
+  font-family: Barlow;
+  font-weight: 500;
+  font-size: 12px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  position: absolute;
+}
+
+.avatarGroupUsersText {
+  color: #290025;
+  opacity: 0.6;
+  font-family: Barlow;
+  font-weight: 400;
+  font-size: 12px;
+}

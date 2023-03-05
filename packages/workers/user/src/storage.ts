@@ -87,7 +87,7 @@ class UserService {
         name: "",
         nickname: "",
         picture: "",
-        rooms: [],
+        labs: [],
       };
 
       const user = await request.json<Partial<User>>();
@@ -125,7 +125,7 @@ class UserService {
       }
 
       // Add room
-      user.rooms.push(addRoomObj.room);
+      user.labs.push(addRoomObj.room);
       await state.storage.put(`user:${user.id}`, user);
       return decorateResponse("Successfully added room for user", 200);
     } catch (e) {
@@ -151,7 +151,7 @@ class UserService {
       }
 
       // Return rooms
-      return decorateResponse(JSON.stringify(user.rooms), 200);
+      return decorateResponse(JSON.stringify(user.labs), 200);
     } catch (e) {
       return decorateResponse(
         "Error occurred when getting rooms for user: " + (e as Error).message,

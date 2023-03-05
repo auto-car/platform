@@ -21,5 +21,5 @@ export interface User extends Identifiable {
   /**
    * Rooms that this user belongs to. May or may not own them.
    */
-  rooms: Room[];
+  labs: Room[];
 }

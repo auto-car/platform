@@ -1,0 +1,21 @@
+.userProfileButton {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  position: fixed;
+  top: 36px;
+  right: 40px;
+  padding: 0px;
+}
+
+.profileName {
+  font-family: Barlow;
+  font-weight: 600;
+  font-size: 10px;
+  color: #11001c;
+}
