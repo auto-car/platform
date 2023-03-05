@@ -5,6 +5,16 @@ import loginUmapImage from "../images/home-umap.png";
 import loginQcImage from "../images/home-qc.png";
 import { CursorIcon } from "app/icons/cursor";
 import { Form } from "@remix-run/react";
+import { auth } from "app/utils/auth.server";
+import { json, type LoaderArgs } from "@remix-run/cloudflare";
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const profile = await auth.isAuthenticated(request, {
+    successRedirect: "/home",
+  });
+
+  return json({ profile });
+};
 
 export default function Index() {
   return (

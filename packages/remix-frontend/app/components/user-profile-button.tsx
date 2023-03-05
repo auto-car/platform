@@ -1,3 +1,4 @@
+import { Form } from "@remix-run/react";
 import React from "react";
 import { Avatar } from "./avatar";
 import styles from "./user-profile-button.module.css";
@@ -12,9 +13,11 @@ export const UserProfileButton: React.FC<UserProfileButtonProps> = ({
   picture,
 }) => {
   return (
-    <button className={styles.userProfileButton}>
-      <Avatar src={picture} />
-      <span className={styles.profileName}>{name}</span>
-    </button>
+    <Form action='/logout' method='post'>
+      <button className={styles.userProfileButton}>
+        <Avatar src={picture} />
+        <span className={styles.profileName}>{name}</span>
+      </button>
+    </Form>
   );
 };
