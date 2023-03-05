@@ -1,7 +1,6 @@
 import { Auth0Icon } from "app/icons/auth0-icon";
 import { LogoIcon } from "app/icons/logo";
 import homeStyles from "../styles/login.module.css";
-
 import loginUmapImage from "../images/home-umap.png";
 import loginQcImage from "../images/home-qc.png";
 import { CursorIcon } from "app/icons/cursor";
