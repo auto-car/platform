@@ -1,21 +1,20 @@
 import React from "react";
 import homeStyles from "../styles/home.module.css";
+import { AvatarGroup } from "./avatar-group";
 import { SearchIcon } from "../icons/search-icon";
 import { CardViewIcon } from "../icons/card-view-icon";
 import { ListViewIcon } from "../icons/list-view-icon";
-import { FilterRowViewToggle } from "../components/filter-row-view-toggle";
-import { LabsIcon } from "app/icons/labs-icon";
-import { type LabsCategory } from "../utils/constants";
-import { LabsCardView } from "app/components/labs-card-view";
+import { FilterRowViewToggle } from "./filter-row-view-toggle";
+import { getTimeAgo } from "../utils/date";
+import { DatasetsCardView } from "./datasets-card-view";
+import { UploadIcon } from "app/icons/upload-icon";
+import { type Team } from "../utils/constants";
 
-interface LabViewRendererProps {
-  labCategory: LabsCategory;
+interface TeamViewRendererProps {
+  team: Team;
 }
 
-export const LabsViewRenderer: React.FC<LabViewRendererProps> = ({
-  labCategory,
-}) => {
-  console.log({ lab: labCategory });
+export const TeamViewRenderer: React.FC<TeamViewRendererProps> = ({ team }) => {
   const [selectedView, setSelectedView] = React.useState<"list" | "card">(
     "card"
   );
@@ -28,10 +27,17 @@ export const LabsViewRenderer: React.FC<LabViewRendererProps> = ({
   return (
     <>
       <hgroup className={homeStyles.homePanelHgroup}>
-        <h1 className={homeStyles.homePanelHeading}>{labCategory.name}</h1>
-        <span className={homeStyles.homePanelMetadataDate}>
-          {labCategory.description}
-        </span>
+        <h1 className={homeStyles.homePanelHeading}>{team.name}</h1>
+        <div className={homeStyles.homePanelMetadata}>
+          <span className={homeStyles.homePanelMetadataDate}>
+            Updated {getTimeAgo(team.updatedAt)}
+          </span>
+          <AvatarGroup
+            avatars={team.members.map((member) => ({
+              src: member.picture,
+            }))}
+          />
+        </div>
       </hgroup>
       <section className={homeStyles.homePanelContent}>
         <div className={homeStyles.contentHeader}>
@@ -74,19 +80,15 @@ export const LabsViewRenderer: React.FC<LabViewRendererProps> = ({
         </div>
         <div className={homeStyles.contentView}>
           {selectedView === "card" ? (
-            <LabsCardView labs={labCategory.labs} />
+            <DatasetsCardView datasets={team.datasets} />
           ) : (
             <pre>
-              {JSON.stringify(
-                { ...labCategory.labs, message: "TODO" },
-                null,
-                2
-              )}
+              {JSON.stringify({ ...team.datasets, message: "TODO" }, null, 2)}
             </pre>
           )}
           <button className={homeStyles.addContentButton}>
-            <LabsIcon width={16} height={16} />
-            Add new Laboratory
+            <UploadIcon width={16} height={16} />
+            Add new Dataset
           </button>
         </div>
       </section>

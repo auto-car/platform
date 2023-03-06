@@ -6,15 +6,14 @@ import homeStyles from "../styles/home.module.css";
 import { auth } from "../utils/auth.server";
 import { MenuPanel } from "../components/menu-panel";
 import { UserProfileButton } from "app/components/user-profile-button";
-import { TeamViewRenderer } from "./team-view-renderer";
-import { LabsViewRenderer } from "./labs-view-renderer";
+import { TeamViewRenderer } from "../components/team-view-renderer";
+import { LabsViewRenderer } from "../components/labs-view-renderer";
 import { type Team, type LabsCategory, mockMenu } from "../utils/constants";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const profile = await auth.isAuthenticated(request, {
     failureRedirect: "/",
   });
-
   return json({ profile });
 };
 
@@ -32,7 +31,7 @@ export default function Home() {
     <main className={homeStyles.homeView}>
       <UserProfileButton
         name={user?.name?.givenName || ""}
-        picture={user?.photos?.[0].value || ""}
+        picture={user?._json?.picture || ""}
       />
       <MenuPanel selected={selected} handleSelectItem={handleSelectItem} />
       <HomePanel selected={selected} />

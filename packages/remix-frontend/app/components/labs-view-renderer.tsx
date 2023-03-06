@@ -1,20 +1,21 @@
 import React from "react";
 import homeStyles from "../styles/home.module.css";
-import { AvatarGroup } from "../components/avatar-group";
 import { SearchIcon } from "../icons/search-icon";
 import { CardViewIcon } from "../icons/card-view-icon";
 import { ListViewIcon } from "../icons/list-view-icon";
-import { FilterRowViewToggle } from "../components/filter-row-view-toggle";
-import { getTimeAgo } from "../utils/date";
-import { DatasetsCardView } from "../components/datasets-card-view";
-import { UploadIcon } from "app/icons/upload-icon";
-import { type Team } from "../utils/constants";
+import { FilterRowViewToggle } from "./filter-row-view-toggle";
+import { LabsIcon } from "app/icons/labs-icon";
+import { type LabsCategory } from "../utils/constants";
+import { LabsCardView } from "app/components/labs-card-view";
 
-interface TeamViewRendererProps {
-  team: Team;
+interface LabViewRendererProps {
+  labCategory: LabsCategory;
 }
 
-export const TeamViewRenderer: React.FC<TeamViewRendererProps> = ({ team }) => {
+export const LabsViewRenderer: React.FC<LabViewRendererProps> = ({
+  labCategory,
+}) => {
+  console.log({ lab: labCategory });
   const [selectedView, setSelectedView] = React.useState<"list" | "card">(
     "card"
   );
@@ -27,21 +28,14 @@ export const TeamViewRenderer: React.FC<TeamViewRendererProps> = ({ team }) => {
   return (
     <>
       <hgroup className={homeStyles.homePanelHgroup}>
-        <h1 className={homeStyles.homePanelHeading}>{team.name}</h1>
-        <div className={homeStyles.homePanelMetadata}>
-          <span className={homeStyles.homePanelMetadataDate}>
-            Updated {getTimeAgo(team.updatedAt)}
-          </span>
-          <AvatarGroup
-            avatars={team.members.map((member) => ({
-              src: member.picture,
-            }))}
-          />
-        </div>
+        <h1 className={homeStyles.homePanelHeading}>{labCategory.name}</h1>
+        <span className={homeStyles.homePanelMetadataDate}>
+          {labCategory.description}
+        </span>
       </hgroup>
       <section className={homeStyles.homePanelContent}>
         <div className={homeStyles.contentHeader}>
-          <h2 className={homeStyles.contentSubheading}>Datasets</h2>
+          <h2 className={homeStyles.contentSubheading}>Labs</h2>
           <div className={homeStyles.contentFilterRow}>
             <div className={homeStyles.filterRowSearchAndSort}>
               <div className={homeStyles.filterSearchbar}>
@@ -80,15 +74,19 @@ export const TeamViewRenderer: React.FC<TeamViewRendererProps> = ({ team }) => {
         </div>
         <div className={homeStyles.contentView}>
           {selectedView === "card" ? (
-            <DatasetsCardView datasets={team.datasets} />
+            <LabsCardView labs={labCategory.labs} />
           ) : (
             <pre>
-              {JSON.stringify({ ...team.datasets, message: "TODO" }, null, 2)}
+              {JSON.stringify(
+                { ...labCategory.labs, message: "TODO" },
+                null,
+                2
+              )}
             </pre>
           )}
           <button className={homeStyles.addContentButton}>
-            <UploadIcon width={16} height={16} />
-            Add new Dataset
+            <LabsIcon width={10} height={16} />
+            Add new Laboratory
           </button>
         </div>
       </section>

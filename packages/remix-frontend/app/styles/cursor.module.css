@@ -1,0 +1,19 @@
+.cursorLabel {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #f0d3ff;
+  font-family: Rubik;
+  font-weight: 500;
+  font-size: 12px;
+  background: #5041ff;
+  margin-top: 12px;
+}
+
+.cursor {
+  fill: #5041ff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  transition: 0.2s linear;
+}

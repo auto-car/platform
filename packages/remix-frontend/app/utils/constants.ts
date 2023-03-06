@@ -101,29 +101,31 @@ const mockTeams: Team[] = [
     ...mockTeamWithoutName,
   },
 ];
-const mockLabs: LaboratoryProps[] = [
+
+export const mockLabs: LaboratoryProps[] = [
   {
     name: "Demo Lab",
     updatedAt: new Date(Date.now() - 1000000),
     members: mockMembers,
     description: "Experimenting with the QC and UMAP features.",
-    id: "id",
+    id: "51f79e8e-346b-45a3-943e-3f2a2dfa5f36",
   },
   {
-    name: "Demo Lab",
+    name: "Lab 2",
     updatedAt: new Date(Date.now() - 1000000),
     members: mockMembers,
     description: "Experimenting with the QC and UMAP features.",
-    id: "id",
+    id: "95f79e8e-346b-45a3-943e-3f2a2dfa5f36",
   },
   {
-    name: "Demo Lab",
+    name: "New-ish Lab",
     updatedAt: new Date(Date.now() - 1000000),
     members: mockMembers,
     description: "Experimenting with the QC and UMAP features.",
-    id: "id",
+    id: "cb78d5ff-84ce-445d-af1b-a07a4f9137b6",
   },
 ];
+
 const mockLabsCategories: LabsCategory[] = [
   {
     name: "All Laboratories",
