@@ -51,7 +51,7 @@
 }
 
 .avatarGroupUsersText {
-  color: #11001c;
+  color: inherit;
   opacity: 0.6;
   font-family: Barlow;
   font-weight: 400;

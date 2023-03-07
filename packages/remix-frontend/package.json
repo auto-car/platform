@@ -12,6 +12,9 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.5.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@liveblocks/client": "^1.0.1",
     "@liveblocks/react": "^1.0.1",
     "@remix-run/cloudflare": "^1.14.0",
@@ -20,9 +23,12 @@
     "@remix-run/node": "^1.14.0",
     "@remix-run/react": "^1.14.0",
     "cross-env": "^7.0.3",
+    "framer-motion": "^10.1.0",
     "isbot": "^3.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-select": "^5.7.0",
+    "react-spinners": "^0.13.8",
     "react-zoom-pan-pinch": "^3.0.1",
     "remix-auth": "^3.4.0",
     "remix-auth-auth0": "^1.6.0"

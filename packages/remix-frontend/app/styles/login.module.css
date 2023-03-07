@@ -110,11 +110,11 @@
   font-weight: 500;
   font-size: 12px;
   background: #5041ff;
-  margin-top: 12px;
 }
 
 .aliceCursor {
   fill: #5041ff;
+  margin-bottom: 12px;
 }
 
 .bob {
@@ -134,11 +134,11 @@
   font-weight: 500;
   font-size: 12px;
   background: #c968ff;
-  margin-top: 12px;
 }
 
 .bobCursor {
   fill: #c968ff;
+  margin-bottom: 12px;
 }
 
 .alex {
@@ -158,11 +158,11 @@
   font-weight: 500;
   font-size: 12px;
   background: #e4c885;
-  margin-top: 12px;
 }
 
 .alexCursor {
   fill: #e4c885;
+  margin-bottom: 12px;
 }
 
 @keyframes alexInfinite {

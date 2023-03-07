@@ -1,14 +1,14 @@
 import React from "react";
-import { TeamsIcon } from "app/icons/teams-icon";
 import homeStyles from "../styles/home.module.css";
-import { type LabsCategory, type Team } from "app/utils/constants";
+import { type LabsCategory, type DataCollection } from "app/utils/constants";
 import { LabsIcon } from "app/icons/labs-icon";
+import { CollectionIcon } from "app/icons/collection-icon";
 
 export interface MenuPanelSectionProps {
-  type: "teams" | "labs";
-  items: Team[] | LabsCategory[];
-  selected: Team | LabsCategory;
-  handleSelectItem: (item: Team | LabsCategory) => void;
+  type: "data-collections" | "labs";
+  items: DataCollection[] | LabsCategory[];
+  selected: DataCollection | LabsCategory;
+  handleSelectItem: (item: DataCollection | LabsCategory) => void;
 }
 
 export interface MenuItemProps {
@@ -22,19 +22,26 @@ export const MenuPanelSection: React.FC<MenuPanelSectionProps> = ({
   handleSelectItem,
 }) => {
   const sectionTitle = React.useMemo(
-    () => (type === "teams" ? "Teams" : "Laboratories"),
+    () => (type === "data-collections" ? "Data Collections" : "Laboratories"),
     [type]
   );
 
   const sectionAddText = React.useMemo(
-    () => (type === "teams" ? "+ Add new team" : "+ Create new laboratory"),
+    () =>
+      type === "data-collections"
+        ? "+ New data collection"
+        : "+ New laboratory",
     [type]
   );
 
   const sectionIcon = React.useMemo(
     () =>
-      type === "teams" ? (
-        <TeamsIcon width={16} height={16} className={homeStyles.sectionIcon} />
+      type === "data-collections" ? (
+        <CollectionIcon
+          width={16}
+          height={16}
+          className={homeStyles.sectionIcon}
+        />
       ) : (
         <LabsIcon width={16} height={16} className={homeStyles.sectionIcon} />
       ),

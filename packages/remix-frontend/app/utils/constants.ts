@@ -34,6 +34,7 @@ const mockDatasets = [
     },
   },
 ];
+
 const mockMembers = [
   {
     email: "email",
@@ -72,7 +73,8 @@ const mockMembers = [
     labs: [],
   },
 ];
-const mockTeamWithoutName: Omit<Team, "name"> = {
+
+const mockDataCollectionWithoutName: Omit<DataCollection, "name"> = {
   datasets: [
     ...mockDatasets,
     ...mockDatasets,
@@ -87,18 +89,19 @@ const mockTeamWithoutName: Omit<Team, "name"> = {
   updatedAt: new Date(Date.now() - 1000000),
   contentType: "team",
 };
-const mockTeams: Team[] = [
+
+const mockDataCollections: DataCollection[] = [
   {
-    name: "UNSW Immunogenomics",
-    ...mockTeamWithoutName,
+    name: "UNSW Datasets",
+    ...mockDataCollectionWithoutName,
   },
   {
-    name: "Seurat",
-    ...mockTeamWithoutName,
+    name: "Tutorial Work",
+    ...mockDataCollectionWithoutName,
   },
   {
-    name: "10X Genomics",
-    ...mockTeamWithoutName,
+    name: "10X Datasets",
+    ...mockDataCollectionWithoutName,
   },
 ];
 
@@ -148,7 +151,7 @@ const mockLabsCategories: LabsCategory[] = [
   },
 ];
 
-export interface Team {
+export interface DataCollection {
   datasets: DatasetProps[];
   name: string;
   members: User[];
@@ -173,8 +176,8 @@ export interface LabsCategory {
 
 export const mockMenu: Pick<MenuPanelSectionProps, "type" | "items">[] = [
   {
-    type: "teams",
-    items: mockTeams,
+    type: "data-collections",
+    items: mockDataCollections,
   },
   {
     type: "labs",

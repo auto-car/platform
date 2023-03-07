@@ -7,6 +7,96 @@
   align-items: flex-start;
 }
 
+.homeTeamSelectorView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.homeTeamSelectorHeading {
+  font-size: 24px;
+  font-family: Barlow;
+  color: #11001c;
+  font-weight: 500;
+}
+
+.teamSelectorOptions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.teamSelectorOption,
+.teamSelectorOptionCreate {
+  outline: none;
+  border: none;
+  background: none;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: #11001c;
+  border-radius: 4px;
+}
+
+.teamSelectorOption:hover {
+  background: #ffffff40;
+}
+
+.teamSelectorOptionImg {
+  width: 180px;
+  height: 180px;
+  border-radius: 4px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.teamSelectorOptionInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.teamSelectorOptionName {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Rubik;
+}
+
+.teamSelectorCreateButton {
+  outline: none;
+  border: none;
+  background: #11001c;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-family: Rubik;
+  font-size: 12px;
+  color: #efd7ff;
+  fill: #efd7ff;
+  border-radius: 4px;
+  margin-top: 24px;
+}
+
+.teamSelectorHelp {
+  font-size: 12px;
+  opacity: 0.75;
+  position: absolute;
+  bottom: 120px;
+}
+
 .menuPanel {
   background: #11001c;
   width: 280px;
@@ -37,6 +127,38 @@
   font-weight: 500;
   color: #b94dae;
   font-size: 10px;
+}
+
+.backToTeamsButton {
+  color: #b94daec7;
+  fill: #b94daec7;
+  outline: none;
+  border: none;
+  width: 100%;
+  background: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 500;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 0px;
+}
+
+.menuPanelTeamSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.menuPanelCurrentTeam {
+  color: #f68beb;
+  font-family: Rubik;
+  font-size: 14px;
+  font-weight: 500;
+  padding-top: 8px;
 }
 
 .menuPanelLogo {
@@ -107,7 +229,6 @@
 
 .sectionItem:active,
 .sectionItemSelected:active {
-  background: #4f0147;
   transform: scale(0.99);
 }
 

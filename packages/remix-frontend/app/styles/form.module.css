@@ -1,0 +1,77 @@
+.dialog {
+  padding: 48px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dialogTitle {
+  font-family: Barlow;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dialogBody {
+  padding: 0px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.formSectionTitle {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: Barlow;
+  color: #290025;
+  opacity: 0.6;
+}
+
+.formSectionInput {
+  padding: 12px;
+  outline: none;
+  border: none;
+  width: calc(100% - 24px);
+  border-radius: 4px;
+  background: #fdfaff;
+  font-size: 12px;
+  font-family: Rubik;
+}
+
+.formFooterActions {
+  padding: 0px;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-family: Rubik;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.formSecondaryAction {
+  outline: none;
+  border: none;
+  background: #fff;
+  color: #11001c;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.formPrimaryAction {
+  outline: none;
+  border: none;
+  background: #11001c;
+  color: #f1deff;
+  padding: 8px 12px;
+  border-radius: 4px;
+}

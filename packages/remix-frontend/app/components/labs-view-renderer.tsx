@@ -7,15 +7,22 @@ import { FilterRowViewToggle } from "./filter-row-view-toggle";
 import { LabsIcon } from "app/icons/labs-icon";
 import { type LabsCategory } from "../utils/constants";
 import { LabsCardView } from "app/components/labs-card-view";
+import { useNavigate } from "@remix-run/react";
 
 interface LabViewRendererProps {
   labCategory: LabsCategory;
+  team: string;
 }
 
 export const LabsViewRenderer: React.FC<LabViewRendererProps> = ({
   labCategory,
+  team,
 }) => {
-  console.log({ lab: labCategory });
+  const navigate = useNavigate();
+  const goToLab = React.useCallback(
+    (labId: string) => navigate(`/home/${team}/lab?id=${labId}`),
+    [navigate, team]
+  );
   const [selectedView, setSelectedView] = React.useState<"list" | "card">(
     "card"
   );
@@ -74,7 +81,7 @@ export const LabsViewRenderer: React.FC<LabViewRendererProps> = ({
         </div>
         <div className={homeStyles.contentView}>
           {selectedView === "card" ? (
-            <LabsCardView labs={labCategory.labs} />
+            <LabsCardView labs={labCategory.labs} goToLab={goToLab} />
           ) : (
             <pre>
               {JSON.stringify(

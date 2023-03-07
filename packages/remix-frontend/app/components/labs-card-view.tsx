@@ -6,18 +6,21 @@ import { PrevIcon } from "../icons/prev-icon";
 import { NextIcon } from "../icons/next-icon";
 import { type LaboratoryProps } from "../utils/constants";
 import { AvatarGroup } from "./avatar-group";
-import { useNavigate } from "@remix-run/react";
 
 interface LabsCardViewProps {
   labs: LaboratoryProps[];
+  goToLab: (labId: string) => void;
 }
 
-export const LabsCardView: React.FC<LabsCardViewProps> = ({ labs }) => {
+export const LabsCardView: React.FC<LabsCardViewProps> = ({
+  labs,
+  goToLab,
+}) => {
   return (
     <div className={datasetsStyles.cardView}>
       <div className={datasetsStyles.cardViewGrid}>
         {labs.slice(0, 12).map((lab, key) => (
-          <LabCard key={key} lab={lab} />
+          <LabCard key={key} lab={lab} goToLab={goToLab} />
         ))}
       </div>
       <div className={datasetsStyles.paginationData}>
@@ -40,14 +43,15 @@ export const LabsCardView: React.FC<LabsCardViewProps> = ({ labs }) => {
   );
 };
 
-const LabCard = ({ lab }: { lab: LaboratoryProps }) => {
-  const navigate = useNavigate();
-  const goToLab = React.useCallback(() => {
-    navigate(`/lab?id=${lab.id}`);
-  }, [navigate, lab.id]);
-
+const LabCard = ({
+  lab,
+  goToLab,
+}: {
+  lab: LaboratoryProps;
+  goToLab: (labId: string) => void;
+}) => {
   return (
-    <button className={labsStyles.labCard} onClick={goToLab}>
+    <button className={labsStyles.labCard} onClick={() => goToLab(lab.id)}>
       <div className={datasetsStyles.datasetCardContent}>
         <div className={datasetsStyles.cardHeader}>
           <hgroup className={datasetsStyles.cardHeaderHGroup}>

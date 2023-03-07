@@ -8,13 +8,15 @@ import { FilterRowViewToggle } from "./filter-row-view-toggle";
 import { getTimeAgo } from "../utils/date";
 import { DatasetsCardView } from "./datasets-card-view";
 import { UploadIcon } from "app/icons/upload-icon";
-import { type Team } from "../utils/constants";
+import { type DataCollection } from "../utils/constants";
 
-interface TeamViewRendererProps {
-  team: Team;
+interface DataCollectionViewRendererProps {
+  team: DataCollection;
 }
 
-export const TeamViewRenderer: React.FC<TeamViewRendererProps> = ({ team }) => {
+export const DataCollectionViewRenderer: React.FC<
+  DataCollectionViewRendererProps
+> = ({ team }) => {
   const [selectedView, setSelectedView] = React.useState<"list" | "card">(
     "card"
   );
