@@ -1,20 +1,43 @@
-/**
- * Note: all of the single attribute fields are still an array because of R.
- * When using this model, simply access the 1st index.
- */
+import { User } from "../user/user";
 
 /**
- * DatasetCategory Model
+ * A collection of datasets
  */
-export interface DatasetCategory {
+export interface DatasetCollection {
   /**
-   * Name of this dataset category
+   * Name of this dataset collection
    */
-  category: string[];
+  name: string;
   /**
    * Datasets in this category
    */
   datasets: Dataset[];
+  /**
+   * Users who have created or modified any dataset in this collection
+   */
+  members: User[];
+  /**
+   * Content type field for the frontend.
+   */
+  contentType: "data-collection";
+  /**
+   * The team this collection belongs to
+   */
+  teamId: string;
+}
+
+/**
+ * An R collection of datasets
+ */
+export interface RDatasetCollection {
+  /**
+   * Name of this dataset collection
+   */
+  name: string;
+  /**
+   * Datasets in this category
+   */
+  datasets: RDataset[];
 }
 
 /**
@@ -24,17 +47,51 @@ export interface Dataset {
   /**
    * Name of this dataset
    */
-  name: string[];
+  name: string;
   /**
    * Time this dataset was created
    */
-  createdAt: string[];
+  createdAt: string;
   /**
    * Time this dataset was updated
    */
-  updatedAt: string[];
+  updatedAt: string;
+  /**
+   * Flag telling us if we already generated output for this dataset
+   */
+  hasOutput: boolean;
+  /**
+   * Files that are in this dataset. TODO: change to File type.
+   */
+  files: string[];
+  /**
+   * Total size in mb of this dataset
+   */
+  totalSize: number;
+  /**
+   * User who uploaded this dataset
+   */
+  createdBy: User;
+}
+
+/**
+ * RDataset Model
+ */
+export interface RDataset {
+  /**
+   * Name of this dataset
+   */
+  name: string[];
   /**
    * Flag telling us if we already generated output for this dataset
    */
   hasOutput: boolean[];
+  /**
+   * Files that are in this dataset. TODO: change to File type.
+   */
+  files: string[];
+  /**
+   * Total size in mb of this dataset
+   */
+  totalSize: number[];
 }

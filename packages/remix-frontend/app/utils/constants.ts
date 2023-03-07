@@ -1,41 +1,44 @@
 import { type MenuPanelSectionProps } from "../components/menu-panel-section";
-import { type User } from "@platform/model";
-import { type DatasetProps } from "../components/datasets-card-view";
+import { type Dataset, type User } from "@platform/model";
 
-const mockDatasets = [
+const mockDatasets: Dataset[] = [
   {
     name: "AbseqRNA_MolsPerCell",
     files: [],
-    updatedAt: new Date(Date.now() - 400000),
+    updatedAt: new Date(Date.now() - 400000).toString(),
+    createdAt: new Date(Date.now() - 400000).toString(),
+    hasOutput: false,
     totalSize: 95.67,
-    uploadedBy: {
+    createdBy: {
       email: "email",
       id: "id",
       name: "Bob",
       nickname: "",
       picture:
         "https://lh3.googleusercontent.com/a/AGNmyxZI-Xl_L0HQ75ed10bPoLmqzHePeptuYO95h4jnTw=s96-c",
-      labs: [],
-    },
+      teams: [],
+    } as User,
   },
   {
     name: "Another Dataset",
     files: [],
-    updatedAt: new Date(Date.now() - 400000),
+    updatedAt: new Date(Date.now() - 400000).toString(),
+    createdAt: new Date(Date.now() - 400000).toString(),
+    hasOutput: false,
     totalSize: 95.67,
-    uploadedBy: {
+    createdBy: {
       email: "email",
       id: "id",
       name: "Bob",
       nickname: "",
       picture:
         "https://lh3.googleusercontent.com/a/AGNmyxZI-Xl_L0HQ75ed10bPoLmqzHePeptuYO95h4jnTw=s96-c",
-      labs: [],
-    },
+      teams: [],
+    } as User,
   },
 ];
 
-const mockMembers = [
+const mockMembers: User[] = [
   {
     email: "email",
     id: "id",
@@ -43,7 +46,7 @@ const mockMembers = [
     nickname: "",
     picture:
       "https://lh3.googleusercontent.com/a/AGNmyxZI-Xl_L0HQ75ed10bPoLmqzHePeptuYO95h4jnTw=s96-c",
-    labs: [],
+    teams: [],
   },
   {
     email: "email",
@@ -52,7 +55,7 @@ const mockMembers = [
     nickname: "",
     picture:
       "https://lh3.googleusercontent.com/a/AGNmyxZI-Xl_L0HQ75ed10bPoLmqzHePeptuYO95h4jnTw=s96-c",
-    labs: [],
+    teams: [],
   },
   {
     email: "email",
@@ -61,7 +64,7 @@ const mockMembers = [
     nickname: "",
     picture:
       "https://lh3.googleusercontent.com/a/AGNmyxZI-Xl_L0HQ75ed10bPoLmqzHePeptuYO95h4jnTw=s96-c",
-    labs: [],
+    teams: [],
   },
   {
     email: "email",
@@ -70,7 +73,7 @@ const mockMembers = [
     nickname: "",
     picture:
       "https://lh3.googleusercontent.com/a/AGNmyxZI-Xl_L0HQ75ed10bPoLmqzHePeptuYO95h4jnTw=s96-c",
-    labs: [],
+    teams: [],
   },
 ];
 
@@ -87,7 +90,7 @@ const mockDataCollectionWithoutName: Omit<DataCollection, "name"> = {
   ],
   members: mockMembers,
   updatedAt: new Date(Date.now() - 1000000),
-  contentType: "team",
+  contentType: "data-collection",
 };
 
 const mockDataCollections: DataCollection[] = [
@@ -152,11 +155,11 @@ const mockLabsCategories: LabsCategory[] = [
 ];
 
 export interface DataCollection {
-  datasets: DatasetProps[];
+  datasets: Dataset[];
   name: string;
   members: User[];
   updatedAt: Date;
-  contentType: "team";
+  contentType: "data-collection";
 }
 
 export interface LaboratoryProps {

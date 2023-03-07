@@ -3,21 +3,13 @@ import { DownloadIcon } from "app/icons/download-icon";
 import { UploadIcon } from "app/icons/upload-icon";
 import { getTimeAgo } from "app/utils/date";
 import styles from "./datasets-card-view.module.css";
-import { type User } from "@platform/model";
+import { type Dataset } from "@platform/model";
 import { Avatar } from "./avatar";
 import { PrevIcon } from "app/icons/prev-icon";
 import { NextIcon } from "app/icons/next-icon";
 
-export interface DatasetProps {
-  name: string;
-  files: string[];
-  totalSize: number;
-  updatedAt: Date;
-  uploadedBy: User;
-}
-
 interface DatasetsCardViewProps {
-  datasets: DatasetProps[];
+  datasets: Dataset[];
 }
 
 export const DatasetsCardView: React.FC<DatasetsCardViewProps> = ({
@@ -33,10 +25,10 @@ export const DatasetsCardView: React.FC<DatasetsCardViewProps> = ({
                 <hgroup className={styles.cardHeaderHGroup}>
                   <h2 className={styles.cardHeading}>{dataset.name}</h2>
                   <span className={styles.updatedAt}>
-                    Updated {getTimeAgo(dataset.updatedAt)}
+                    Updated {getTimeAgo(new Date(dataset.updatedAt))}
                   </span>
                 </hgroup>
-                <Avatar src={dataset.uploadedBy.picture} size='small' />
+                <Avatar src={dataset.createdBy.picture} size='small' />
               </div>
               <div className={styles.cardDatasetData}>
                 <p className={styles.cardDatasetDataText}>

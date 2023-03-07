@@ -11,7 +11,7 @@ import {
   TransformComponent,
   TransformWrapper,
 } from "react-zoom-pan-pinch";
-import { DatasetCategory, Room, Dataset, RoomContent } from "@platform/model";
+import { DatasetCollection, Room, Dataset, RoomContent } from "@platform/model";
 import { LogoHeader } from "components/logo-header/logo-header";
 import { UserProfileButton } from "components/user-profile-button";
 import { PageHeader } from "components/page-header";
@@ -40,7 +40,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ roomId }) => {
     owner: { id: "", name: "", picture: "" },
     updatedAt: new Date(),
   });
-  const [datasets, setDatasets] = React.useState<DatasetCategory[]>([]);
+  const [datasets, setDatasets] = React.useState<DatasetCollection[]>([]);
   const { user } = React.useContext(UserContext);
 
   const getRoom = React.useCallback(async () => {
@@ -63,7 +63,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ roomId }) => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_ANALYSIS_WORKER_URL}/datasets`
       );
-      const datasetsFromResponse = await response.json<DatasetCategory[]>();
+      const datasetsFromResponse = await response.json<DatasetCollection[]>();
       setDatasets(datasetsFromResponse);
     } catch (e) {
       console.error(e as Error);

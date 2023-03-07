@@ -27,23 +27,43 @@ function(f) {
     list(msg = paste(content))
 }
 
+#* Create a new Dataset Collection
+#* @param collection:string team_name:string
+#* @post /collection
+function(collection, team_name) {
+    print(paste("====== Creating Collection ",
+     paste(collection, " ======", sep = ""), sep = ""))
+
+    dir_name <- paste("data/", team_name, sep = "")
+    dir_name <- paste(dir_name, "/", sep = "")
+    dir_name <- paste(dir_name, collection, sep = "")
+    dir.create(dir_name, showWarnings = FALSE, recursive = TRUE)
+
+    list(msg = paste("Collection created successfully"))
+}
+
 #* Upload a Dataset (10X Format)
-#* @param files:[file] dataset_name:string dataset_category:string
+#* @param files:[file] name:string collection:string team:string
 #* @post /upload-10X
-function(files, dataset_name, dataset_category) {
+function(files, name, collection, team) {
     print(paste("======= Creating Dataset ",
-        paste(dataset_name, " =======", sep = ""), sep = "")
+        paste(name, " =======", sep = ""), sep = "")
     )
     fnames <- names(files)
-    dir_name_prefix <- paste("data/", dataset_category, sep = "")
+    dir_name_prefix <- paste("data/", team, sep = "")
+    dir_name_prefix <- paste(dir_name_prefix, "/", sep = "")
+    dir_name_prefix <- paste(dir_name_prefix, collection, sep = "")
     dir_name_prefix <- paste(dir_name_prefix, "/", sep = "")
 
-    dir_name <- paste(dir_name_prefix, dataset_name, sep = "")
+    dir_name <- paste(dir_name_prefix, name, sep = "")
     dir.create(dir_name, showWarnings = FALSE, recursive = TRUE)
 
     file_names <- names(files)
     file_path_prefix <- paste(dir_name, "/", sep = "")
     file_index <- 1
+
+    dataset_object <- c()
+    total_size <- 0
 
     for (file in files) {
         file_type <- typeof(file)
@@ -58,10 +78,17 @@ function(files, dataset_name, dataset_category) {
         print(paste("======= -> wrote file ",
             paste(file_path, " =======", sep = ""),
         sep = ""))
+        ## Add to total megabytes size
+        total_size <- total_size + (file.size(file_path) * 0.000001)
         file_index <- file_index + 1
     }
 
-    list(msg = paste("Dataset created successfully"))
+    dataset_object[["files"]] <- fnames
+    dataset_object[["totalSize"]] <- total_size
+    dataset_object[["name"]] <- name
+    dataset_object[["hasOutput"]] <- FALSE
+
+    dataset_object
 }
 
 #* List Datasets
@@ -108,7 +135,8 @@ function() {
 
         for (index in seq(from = 1, to = length(amended_datasets))) {
             dir_value <- amended_datasets[[index]]
-            no_of_slash <- lengths(regmatches(dir_value, gregexpr("/", dir_value)))
+            no_of_slash <- lengths(regmatches(dir_value,
+            gregexpr("/", dir_value)))
 
             if (no_of_slash == 2) {
                 if (added_categories > 0) {

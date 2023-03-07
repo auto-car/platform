@@ -1,5 +1,5 @@
 import { decorateResponse } from "./decorateResponse";
-import { Room, User } from "@platform/model";
+import { Team, User } from "@platform/model";
 
 export class StorageDO {
   state: DurableObjectState;
@@ -34,12 +34,12 @@ export class StorageDO {
           default:
             return decorateResponse("Base user endpoint", 200);
         }
-      case "/user/rooms":
-        return this.userService.getUserRooms(request, this.state);
-      case "/user/room":
+      case "/user/teams":
+        return this.userService.getUserTeams(request, this.state);
+      case "/user/team":
         switch (request.method) {
           case "POST":
-            return this.userService.addRoomToUser(request, this.state);
+            return this.userService.addTeamToUser(request, this.state);
           default:
             return decorateResponse("Base /user/room endpoint", 200);
         }
@@ -87,7 +87,7 @@ class UserService {
         name: "",
         nickname: "",
         picture: "",
-        labs: [],
+        teams: [],
       };
 
       const user = await request.json<Partial<User>>();
@@ -112,9 +112,9 @@ class UserService {
     }
   }
 
-  async addRoomToUser(request: Request, state: DurableObjectState) {
+  async addTeamToUser(request: Request, state: DurableObjectState) {
     try {
-      const addRoomObj = await request.json<{ id: string; room: Room }>();
+      const addRoomObj = await request.json<{ id: string; team: Team }>();
       // Check user exists
       const user = await state.storage.get<User>(`user:${addRoomObj.id}`);
       if (!user) {
@@ -125,18 +125,18 @@ class UserService {
       }
 
       // Add room
-      user.labs.push(addRoomObj.room);
+      user.teams.push(addRoomObj.team);
       await state.storage.put(`user:${user.id}`, user);
-      return decorateResponse("Successfully added room for user", 200);
+      return decorateResponse("Successfully added team for user", 200);
     } catch (e) {
       return decorateResponse(
-        "Error occurred when adding room for user: " + (e as Error).message,
+        "Error occurred when adding team for user: " + (e as Error).message,
         400
       );
     }
   }
 
-  async getUserRooms(request: Request, state: DurableObjectState) {
+  async getUserTeams(request: Request, state: DurableObjectState) {
     try {
       const url = new URL(request.url);
       const userId = url.searchParams.get("id");
@@ -151,7 +151,7 @@ class UserService {
       }
 
       // Return rooms
-      return decorateResponse(JSON.stringify(user.labs), 200);
+      return decorateResponse(JSON.stringify(user.teams), 200);
     } catch (e) {
       return decorateResponse(
         "Error occurred when getting rooms for user: " + (e as Error).message,

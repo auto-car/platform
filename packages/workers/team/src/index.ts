@@ -3,7 +3,6 @@ import { decorateResponse } from "./decorateResponse";
 export interface Env {
   STORAGE: DurableObjectNamespace;
   USER: Fetcher;
-  TEAM: Fetcher;
 }
 
 export default {

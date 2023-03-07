@@ -4929,6 +4929,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@platform/lab-worker@workspace:^, @platform/lab-worker@workspace:packages/workers/lab":
+  version: 0.0.0-use.local
+  resolution: "@platform/lab-worker@workspace:packages/workers/lab"
+  dependencies:
+    "@platform/model": "workspace:^"
+    tsx: ^3.12.1
+  languageName: unknown
+  linkType: soft
+
 "@platform/model@workspace:^, @platform/model@workspace:packages/model":
   version: 0.0.0-use.local
   resolution: "@platform/model@workspace:packages/model"
@@ -4979,6 +4988,15 @@ __metadata:
 "@platform/room-worker@workspace:^, @platform/room-worker@workspace:packages/workers/room":
   version: 0.0.0-use.local
   resolution: "@platform/room-worker@workspace:packages/workers/room"
+  dependencies:
+    "@platform/model": "workspace:^"
+    tsx: ^3.12.1
+  languageName: unknown
+  linkType: soft
+
+"@platform/team-worker@workspace:^, @platform/team-worker@workspace:packages/workers/team":
+  version: 0.0.0-use.local
+  resolution: "@platform/team-worker@workspace:packages/workers/team"
   dependencies:
     "@platform/model": "workspace:^"
     tsx: ^3.12.1
@@ -6579,9 +6597,11 @@ __metadata:
     "@next/font": 13.0.7
     "@platform/analysis-worker": "workspace:^"
     "@platform/frontend": "workspace:^"
+    "@platform/lab-worker": "workspace:^"
     "@platform/model": "workspace:^"
     "@platform/remix-frontend": "workspace:^"
     "@platform/room-worker": "workspace:^"
+    "@platform/team-worker": "workspace:^"
     "@platform/user-worker": "workspace:^"
     "@react-hook/size": ^2.1.2
     "@remix-run/cloudflare": ^1.14.0

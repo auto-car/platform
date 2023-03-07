@@ -1,11 +1,11 @@
 import React from "react";
-import { DatasetCategory, Dataset } from "@platform/model";
+import { DatasetCollection, Dataset } from "@platform/model";
 import { UploadDatasetButton } from "../../components/dashboard/upload-datset-button";
 import { MenuDatasetCategory } from "../../components/dashboard/menu-dataset-category";
 
 interface DatasetsMenuProps {
   triggerReload: () => void;
-  datasets: DatasetCategory[];
+  datasets: DatasetCollection[];
   handleSelectDataset: (category: string, dataset: Dataset) => void;
 }
 
@@ -27,7 +27,7 @@ export const DatasetsMenu: React.FC<DatasetsMenuProps> = ({
         justifyContent: "center",
       }}
     >
-      <div
+      {/* <div
         style={{
           width: "calc(100% - 48px)",
           height: "90%",
@@ -57,7 +57,7 @@ export const DatasetsMenu: React.FC<DatasetsMenuProps> = ({
             handleSelectDataset={handleSelectDataset}
           />
         ))}
-      </div>
+      </div> */}
     </aside>
   );
 };

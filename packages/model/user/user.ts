@@ -1,4 +1,4 @@
-import { Room } from "../rooms/room";
+import { Team } from "../team/team";
 import { Identifiable } from "../traits/traits";
 
 export interface User extends Identifiable {
@@ -21,5 +21,5 @@ export interface User extends Identifiable {
   /**
    * Rooms that this user belongs to. May or may not own them.
    */
-  labs: Room[];
+  teams: Team[];
 }

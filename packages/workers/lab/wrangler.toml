@@ -1,4 +1,4 @@
-name = "autocar-analysis-worker"
+name = "autocar-lab-worker"
 main = "./dist/index.mjs"
 compatibility_date = "2022-09-08"
 services = [

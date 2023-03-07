@@ -1,0 +1,30 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "include": ["./src/**/*.ts", "./src/**/*.integration.test.ts"],
+  "exclude": ["./dist", "**/__tests__/**"],
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext"],
+    "alwaysStrict": true,
+    "strict": true,
+    "noEmitOnError": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "types": ["@cloudflare/workers-types", "jest"],
+    "paths": {
+      "@platform/model": ["../../model"]
+    }
+  },
+  "references": [
+    {
+      "path": "../../model"
+    }
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

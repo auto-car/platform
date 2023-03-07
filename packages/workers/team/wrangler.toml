@@ -1,14 +1,14 @@
-name = "autocar-analysis-worker"
+name = "autocar-team-worker"
 main = "./dist/index.mjs"
 compatibility_date = "2022-09-08"
-services = [
-    { binding = "USER", service = "autocar-user-worker", environment = "production" },
-    { binding = "TEAM", service = "autocar-team-worker", environment = "production" },
-]
 
 [build]
 command = "yarn build"
 
+[[services]]
+binding = "USER"
+service = "autocar-user-worker"
+environment = "production"
 
 [durable_objects]
 bindings = [{name = "STORAGE", class_name = "StorageDO"}]

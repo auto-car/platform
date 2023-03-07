@@ -64,7 +64,7 @@ interface HomePanelProps {
 const HomePanel: React.FC<HomePanelProps> = ({ selected, team }) => {
   return (
     <div className={homeStyles.homePanel}>
-      {selected.contentType === "team" ? (
+      {selected.contentType === "data-collection" ? (
         <DataCollectionViewRenderer team={selected as DataCollection} />
       ) : (
         <LabsViewRenderer labCategory={selected as LabsCategory} team={team} />
