@@ -35,6 +35,3 @@ jobs:
 
       - name: Run tests
         run: echo "You need to add tests!!"
-
-      - name: Deploy workers
-        run: chmod u+x publish-workers.sh && yarn workers:publish
